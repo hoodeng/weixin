@@ -1,0 +1,22 @@
+<!--pages/mock_order/mock_order.wxml-->
+<view>
+  <view class='item'>模拟订单</view>
+  <view class='item'>
+    <view>寄件人信息: {{sender.name}} {{sender.tel}} {{sender.province}} {{sender.city}} {{sender.district}} {{sender.address}}</view>
+  </view>
+
+  <view class='item'>
+    <view>收件人信息: {{receiver.name}} {{receiver.tel}} {{receiver.province}} {{receiver.city}} {{receiver.district}} {{receiver.address}}</view>
+  </view>
+
+  <view class='item'>
+    <view>货品信息:</view>
+    <view wx:if="{{goodsInfo.volume && goodsInfo.volume.length && goodsInfo.volume.width && goodsInfo.volume.height}}">体积:{{goodsInfo.volume.length}}cm *{{goodsInfo.volume.width}}cm *{{goodsInfo.volume.height}}cm </view>
+    <view wx:if="{{goodsInfo.weight && goodsInfo.weight >0}}">重量:{{goodsInfo.weight}} kg</view>
+  </view>
+
+  <view class='item'>
+    <view>预约取件时间: {{deliveryTime}} </view>
+  </view>
+  
+</view>

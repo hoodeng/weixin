@@ -1,0 +1,47 @@
+/* pages/profile/profile.wxss */
+
+.user-info{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #dd3c1c;
+  height: 200rpx;
+}
+.nickname{
+  color: white;
+  margin-top: 20rpx
+}
+
+.avator{
+  width: 100rpx;
+  height: 100rpx
+}
+
+.item-wrap{
+  margin-top: 40rpx
+}
+
+.item{
+  background: white;
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60rpx
+}
+
+.divider{
+  height: 1px
+}
+
+.arrow-icon{
+  display: flex;
+  width: 40rpx;
+  height: 40rpx;
+  right: 10px;
+  margin-right: 20rpx;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}

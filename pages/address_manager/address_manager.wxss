@@ -1,0 +1,24 @@
+/* pages/address_manager/address_manager.wxss */
+.item-wrap{
+  margin-top: 20rpx
+}
+
+.item{
+  padding: 20rpx;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1px;
+}
+
+.submit{
+  display: flex;
+  align-items: center;
+  margin-top: 40rpx;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  height: 80rpx;
+  background: red;
+  color: white;
+  justify-content: center
+}

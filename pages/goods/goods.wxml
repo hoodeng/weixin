@@ -1,0 +1,72 @@
+<!--pages/goods/goods.wxml-->
+<wxs module="m1">
+  var getGoodsNameBg = function(id,goodsNameIndex) {
+    console.log(id + '' + goodsNameIndex)
+    if(id == goodsNameIndex){
+      console.log('=====')
+      return 'goods_category_button_select'
+    }else{
+      console.log('===== else')
+      return 'goods_category_button'
+    }
+  }
+
+  module.exports.getGoodsNameBg = getGoodsNameBg;
+</wxs>
+
+<view class='main_content'>
+  <view class='goods_info'>
+    <view class='goods_weight'>
+      <view>货物重量:</view>
+      <view class='goods_weight_op'>
+        <image bindtap="add" class='op_img' src='../../resources/add.png'></image>
+        <view class='goods_weight_text'>
+          <input class='goods_weight_input' maxlength='4' placeholder='0' type='digit' value='{{weight}}' bindinput='vWeight'/>kg
+        </view>
+        <image bindtap='reduce' class='op_img' src='../../resources/reduce.png'></image>
+      </view>
+    </view>
+     <view class='divider'/> 
+    <view class='goods_volume'>
+      <view>货物体积:</view>
+      <view class='goods_volume_op'>
+        <view class='goods_volume_wrap'>
+          <input bindinput="vLenght" placeholder='长度'></input>
+          <text class='goods_volume_text'>cm</text>
+        </view>
+
+        <view class='goods_volume_divider'> * </view>
+
+        <view class='goods_volume_wrap'>
+          <input bindinput="vWidth" placeholder='宽度'></input>
+          <text class='goods_volume_text'>cm</text>
+        </view>
+
+        <view class='goods_volume_divider'> * </view>
+
+        <view class='goods_volume_wrap'>
+          <input bindinput="vHeight" placeholder='高度'></input>
+          <text class='goods_volume_text'>cm</text>
+        </view>
+      </view>
+    </view>
+
+    <text class='goods_info_warning'>\n1.重货请填写重量，体积大但较轻的货物请填写体积\n2.实际计算以快递员上面确定开单金额为准</text>
+  </view>
+  
+  <view class='goods_category'>
+    <view>货物类型</view>
+    <view class='goods_category_name'>
+      <button class="{{m1.getGoodsNameBg(1,goodsNameIndex)}}" data-id='1' bindtap='onClickGoods'>日用品</button>
+      <button class="{{m1.getGoodsNameBg(2,goodsNameIndex)}}" data-id='2' bindtap='onClickGoods'>文件</button>
+      <button class="{{m1.getGoodsNameBg(3,goodsNameIndex)}}" data-id='3' bindtap='onClickGoods'>数码产品</button>
+    </view>
+    <view class='goods_category_name'>
+      <button class="{{m1.getGoodsNameBg(4,goodsNameIndex)}}" data-id='4' bindtap='onClickGoods'>服装</button>
+      <button class="{{m1.getGoodsNameBg(5,goodsNameIndex)}}" data-id='5' bindtap='onClickGoods'>食品</button>
+      <button class="{{m1.getGoodsNameBg(6,goodsNameIndex)}}" data-id='6' bindtap='onClickGoods'>其他</button>
+    </view>
+  </view>
+
+  <button class='submit' bindtap='submit'>确定</button>
+</view>

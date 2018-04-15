@@ -1,0 +1,11 @@
+<!--pages/address_manager/address_manager.wxml-->
+<view class='item-wrap' wx:for="{{userAddressArray}}" wx:for-index="idx" wx:for-item="item">
+  <view class='item' data-item="{{item}}" bindtap='onItemClick'>
+    <view>{{item.name}}    {{item.tel}}</view>
+    <view>{{item.province}}.{{item.city}}.{{item.district
+}}.{{item.address
+}}</view>
+  </view>
+</view>
+
+<button class='submit' bindtap='submit'>添加地址</button>

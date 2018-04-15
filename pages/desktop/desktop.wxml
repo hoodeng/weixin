@@ -1,0 +1,59 @@
+<!--pages/destop/destop.wxml-->
+<view class='main'>
+  <view class='item-wrapper' bindtap='toSenderAddress'>
+    <view class='subtip'>
+      <view class='subLable' >寄件人:</view>
+      <view>
+        <view class='subtitle'>
+          <view class='name'>{{sender.name}}</view>
+          <view class='phone'>{{sender.tel}}</view>
+        </view>
+        <view class='address'>{{sender.province}}{{sender.city}}{{sender.district}}{{sender.address}}</view>
+      </view>
+    </view>
+    
+    <image class='arrow-icon' src="{{arrow_src}}"></image>
+  </view>
+
+  <view class='item-wrapper' bindtap='toReceiverAddress'>
+    <view class='subtip'>
+      <view class='subLable' >收件人: </view>
+          <view>
+            <view class='subtitle'>
+              <view class='name'>{{receiver.name}}</view>
+              <view class='phone'>{{receiver.tel}}</view>
+            </view>
+            <view class='address'>{{receiver.province}}{{receiver.city}}{{receiver.district}}{{receiver.address}}</view>
+          </view>
+    </view>
+    
+    <image class='arrow-icon' src="{{arrow_src}}"></image>
+  </view>
+
+  <view class='item-wrapper' bindtap='toGoodsInfo'>
+    <view class='subtip'>
+      <view class='subLable'>货物信息:</view>
+      <view class='goods-item-wrapper'>
+        <view class='goods-item' wx:if="{{goodsVolume && goodsVolume.length && goodsVolume.width && goodsVolume.height}}">
+          <view>体积(长x宽x高,单位cm):</view>
+          <view>{{goodsVolume.length}} * {{goodsVolume.width}} * {{goodsVolume.height}}</view>
+        </view>
+        <view class='goods-item' wx:if="{{goodsWeight}}">
+          <view>重量(kg):</view>
+          <view>{{goodsWeight}}</view>
+        </view>
+      </view>
+    </view>
+    <image class='arrow-icon' src="{{arrow_src}}"></image>
+  </view>
+
+  <view class='time-wrap' bindtap='timeSelected'>
+    <view class='subLable'>预约取件时间:</view>
+    <view class='time-items'>
+      <view>{{deliveryTime}}</view>
+      <image class='arrow-icon' src="{{arrow_src}}"></image>
+    </view>
+  </view>
+
+  <button class='submit' bindtap='submit'>提交订单</button>
+</view>

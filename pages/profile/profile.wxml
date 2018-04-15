@@ -1,0 +1,18 @@
+<!--pages/profile/profile.wxml-->
+<view class='user-info'>
+  <image class='avator' src='{{avatorUrl}}'>
+  </image>
+  <text class='nickname'>{{nickName}}</text>
+</view>
+
+<view class='item-wrap'>
+  <view class='item'>
+    <view>查询订单</view>
+    <image class='arrow-icon' src='../../resources/mine_info.png'></image>
+   </view>
+  <view class='divider'/>
+  <view class='item' bindtap='addressManager'>
+    <view>地址管理</view>
+    <image class='arrow-icon' src='../../resources/mine_info.png'></image>
+   </view>
+</view>

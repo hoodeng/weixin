@@ -1,0 +1,31 @@
+/* pages/time/time.wxss */
+.time-wrap{
+  background: white;
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60rpx
+}
+
+.time-selected-icon{
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.divider{
+  height: 1px;
+  width: 100%;
+}
+
+.submit{
+  display: flex;
+  align-items: center;
+  margin-top: 40rpx;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  height: 80rpx;
+  background: red;
+  color: white;
+  justify-content: center
+}

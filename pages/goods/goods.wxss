@@ -1,0 +1,149 @@
+/* pages/goods/goods.wxss */
+.main_content{
+  position: fixed;
+   width: 100%; 
+}
+
+.goods_info{
+  background: white;
+  width: 100%;
+  padding: 20rpx;
+  margin-top: 48rpx
+}
+
+.divider{
+  width: 100%;
+  height: 1rpx;
+  background: lightgray
+}
+
+.goods_weight{
+  display: flex;
+  flex-direction: row;
+  background: white;
+  width: 100%;
+  height: 100rpx;
+  align-items: center;
+}
+
+.goods_weight_op{
+  margin-left: 20rpx;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.goods_weight_text{
+  width: 100rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  text-align: center
+}
+
+.goods_weight_input{
+  display: flex;
+  justify-content: center;   
+  align-items: center;
+}
+
+.op_img{
+  width: 50rpx;
+  height: 50rpx;
+  border-width: 1rpx 1rpx 1rpx 1rpx;  
+  border-color: black;  
+  border-style: solid; 
+}
+
+
+.goods_volume{
+  display: flex;
+  flex-direction: row;
+  background: white;
+  width: 100%;
+  height: 100rpx;
+  align-items: center;
+}
+
+.goods_volume_op{
+  margin-left: 20rpx;
+  justify-content: center;
+  align-items: center;
+  font-size: 22rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.goods_volume_wrap{
+  display: flex;
+  flex-direction: row;
+  border-width: 1rpx 1rpx 1rpx 1rpx;  
+  border-color: black;  
+  border-style: solid; 
+  height: 60rpx;
+  width: 100rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  justify-content: center; 
+  align-items: center
+}
+
+.goods_volume_text{
+  align-items: center;
+  display: flex;
+}
+
+.goods_volume_divider{
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  align-items: center;
+  display: flex
+}
+
+.goods_info_warning{
+  font-size: 28rpx;
+  color: lightpink
+}
+
+.goods_category{
+  background: white;
+  margin-top: 48rpx;
+  padding: 20rpx;
+}
+
+.goods_category_name{
+  display: flex;
+  flex-direction: row;
+  margin-top: 20rpx;
+}
+
+.goods_category_button{
+  font-size: 24rpx;
+  width: 180rpx;
+}
+
+.goods_category_button_select{
+  font-size: 24rpx;
+  width: 180rpx;
+  background: red;
+  color: white
+}
+
+.button{
+  width: 100%;
+  background: red;
+}
+
+.submit{
+  display: flex;
+  align-items: center;
+  margin-top: 40rpx;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  height: 80rpx;
+  background: red;
+  color: white;
+  justify-content: center
+}

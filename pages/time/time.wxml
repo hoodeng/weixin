@@ -1,0 +1,12 @@
+<!--pages/time/time.wxml-->
+<view wx:for="{{array}}" wx:for-index="idx" wx:for-item="item">
+  <view class='time-wrap' data-index='{{idx}}' data-item="{{item}}"bindtap='onSelected'>
+    <view>
+      {{item.name}}
+    </view>
+    <icon wx:if="{{item.selected}}" type='success_no_circle'></icon>
+  </view>
+  <view class='divider'></view>
+</view>
+
+<button class='submit' bindtap='submit'>确认</button>

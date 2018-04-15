@@ -1,0 +1,4 @@
+/* pages/mock_order/mock_order.wxss */
+.item{
+  margin-top: 20rpx;
+}

@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/desktop/desktop",
+    "pages/time/time",
+    "pages/goods/goods",
+    "pages/home/home",
+    "pages/address_multi/address_multi",
+    "pages/profile/profile",
+    "pages/address_manager/address_manager",
+    "pages/mock_order/mock_order"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "蒲公英家居"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/desktop/desktop",
+        "text": "预约取件"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "个人中心"
+      }
+    ]
+  },
+  "debug": true
+}

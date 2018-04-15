@@ -1,0 +1,8 @@
+<template name="sender">
+  <view class='item-wrapper'>
+    <view>收件人:</view>
+    <view class='name'>口天吴</view>
+    <view class='phone'>13812345678</view>
+    <view class='address'>广东省广州市荔湾区芳村</view>
+  </view>
+</template>
