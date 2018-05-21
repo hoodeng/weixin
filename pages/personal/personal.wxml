@@ -1,0 +1,98 @@
+<!--联系人信息  -->
+<view>
+  <view class='global-title'>联系人信息：</view>
+  <view class='contact-wrapper'>
+    <view class='contact-item '>
+      <view class='contact-item-label'>真实姓名:</view>
+      <input class='contact-item-input' placeholder='请输入真实姓名' bindinput='userNameBindInput'></input>
+    </view>
+    <view class='global-divider'></view>
+    <view class='contact-item '>
+      <view class='contact-item-label'>联系电话:</view>
+      <input class='contact-item-input' placeholder='请输入联系电话' bindinput='userTelBindInput'></input>
+    </view>
+  </view>
+</view>
+
+
+<!--商品信息  -->
+<view class=''>
+  <view class='global-title'>商品信息：</view>
+
+  <view class='product-info-content'>
+    <view class='products-category-wrapper'>
+      <view>商品类别:</view>
+      <view class='global-picker-wrapper'>
+        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">
+          <view>{{categorysData[catIndex]}}</view>
+        </picker>
+
+        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+      </view>
+      <view class='global-picker-wrapper'>
+        <picker bindchange="subCategoryBindChange" value="{{subCatIndex}}" range="{{subCategorysData}}">
+          <view>{{subCategorysData[subCatIndex]}}</view>
+        </picker>
+        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+      </view>
+
+      <view class='goods_weight_op'>
+        <text>数量：</text>
+        <image bindtap="add" class='op_img' src='../../resources/add.png'></image>
+        <view class='goods_weight_text'>
+          <input class='goods_weight_input' maxlength='4' type="number" value='{{goodsNumber}}' bindinput='bindNumberInput' />
+        </view>
+        <image bindtap='reduce' class='op_img' src='../../resources/reduce.png'></image>
+      </view>
+    </view>
+
+    <view class='product-model'>
+      <view class='global-label'>商品型号:</view>
+      <input class='global-input' bindinput='bindModelInput'></input>
+    </view>
+
+    <view class='product-notify'>
+      <view class='global-label'>特殊要求:</view>
+      <input class='global-input' bindinput='bindWarningInput'></input>
+    </view>
+  </view>
+</view>
+
+
+<!--添加照片  -->
+<view class='upload-images-wrapper'>
+  <view class='global-title'>上传商品照片？</view>
+  <view class='selected-image'>
+    <view wx:for="{{imageUrls}}" wx:for-index="idx" wx:for-item="image">
+      <image class='upload-image' src='{{image}}'></image>
+    </view>
+    <view class='add-image-wrapper' wx:if='{{!imageUrls ||  imageUrls.length < 1}}'>
+      <image class='add-image' src='../../image/image-add.png' bindtap='takePhoto'></image>
+    </view>
+  </view>
+</view>
+
+<!--服务类目  -->
+<view>
+  <view class='global-title'>选择服务:</view>
+  <view class='service-content'>
+    <view >服务类目:</view>
+    <view class='global-picker-wrapper'>
+      <picker bindchange="bindServiceChange" value="{{serviceIndex}}" range="{{services}}">
+        <view>{{services[serviceIndex]}}</view>
+      </picker>
+
+      <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+    </view>
+  </view>
+  <view class='service-content'>
+    <view >服务类型:</view>
+    <view class='global-picker-wrapper'>
+      <picker bindchange="bindServiceTypeChange" value="{{serviceTypeIndex}}" range="{{servicesType}}">
+        <view>{{servicesType[serviceTypeIndex]}}</view>
+      </picker>
+
+      <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+    </view>
+  </view>
+</view>

@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/desktop/desktop",
+    "pages/personal/personal",
+    
     "pages/time/time",
     "pages/goods/goods",
     "pages/home/home",
