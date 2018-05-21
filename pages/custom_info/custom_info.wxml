@@ -1,0 +1,110 @@
+<!--pages/custom_info/custom_info.wxml-->
+<view>
+  <view class='global-title'>联系人信息</view>
+  <view class='global-content'>
+    <view class='contact-wrapper'>
+      <view class='contact-item '>
+        <view class='contact-item-label'>客户姓名:</view>
+        <input class='contact-item-input' placeholder='请输入真实姓名' bindinput='userNameBindInput'></input>
+      </view>
+      <view class='contact-item '>
+        <view class='contact-item-label'>手机号码:</view>
+        <input class='contact-item-input' placeholder='请输入联系电话' bindinput='userTelBindInput'></input>
+      </view>
+    </view>
+
+    <view class='global-divider'></view>
+
+    <view class='customer-address-wrapper'>
+      <view>客户地址:</view>
+      <view class='global-picker-wrapper'>
+        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">省份
+          <view>{{categorysData[catIndex]}}</view>
+        </picker>
+
+        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+      </view>
+      <view class='global-picker-wrapper'>
+        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">城市
+          <view>{{categorysData[catIndex]}}</view>
+        </picker>
+
+        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+      </view>
+      <view class='global-picker-wrapper'>
+        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">区/县
+          <view>{{categorysData[catIndex]}}</view>
+        </picker>
+
+        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+      </view>
+    </view>
+
+    <view class='contact-wrapper'>
+      <view class='contact-item '>
+        <view class='contact-item-label'>详细地址:</view>
+        <input class='contact-item-input' placeholder='请输入详细地址' bindinput='userTelBindInput'></input>
+      </view>
+    </view>
+    <view class='global-divider'></view>
+    <view>
+      <view class='checkout-cancel-wrapper'>
+        <view>*是否需要喵师傅核销?</view>
+        <checkbox class='checkout-cancel-switch' value='是否需要喵师傅核销?' checked='false'></checkbox>
+      </view>
+      <view class='checkout-ordersn-wrapper'>
+        <view>核销单号:</view>
+        <input placeholder='请输入核销单号'></input>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+<view>
+  <view class='global-title'>提货信息</view>
+  <view class='express-wrapper'>
+    <view class='express-pick-address'>
+      <view>提货地址:</view>
+      <input placeholder='请输入提货地址'></input>
+    </view>
+
+    <view class='express-pick-address'>
+      <view>提货电话:</view>
+      <input placeholder='请输入提货电话'></input>
+    </view>
+
+    <view class='express-pick-address'>
+      <view>货物件数:</view>
+      <input value='1'></input>
+    </view>
+    
+    <view class='third-express-wrapper'>
+      <view>*是否需要到第三方物流点提货?</view>
+      <checkbox class='checkout-cancel-switch' value='' checked='false'></checkbox>
+    </view>
+
+    <view class='third-express-info'>
+      <view>物流公司:</view>
+      <view class='global-picker-wrapper'>请选择物流公司
+        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">
+          <view>{{categorysData[catIndex]}}</view>
+        </picker>
+
+        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+      </view>
+    </view>
+
+    <view class='third-express-info'>
+      <view>是否已到货:</view>
+      <view class='global-picker-wrapper'>货物是否已到地点
+        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">
+          <view>{{categorysData[catIndex]}}</view>
+        </picker>
+
+        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+      </view>
+    </view>
+  </view>
+
+</view>

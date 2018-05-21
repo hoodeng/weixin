@@ -96,3 +96,5 @@
     </view>
   </view>
 </view>
+
+<button class='submit' bindtap='submit'>下一步</button>

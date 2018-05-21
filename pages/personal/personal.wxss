@@ -182,3 +182,14 @@
   background: white
 }
 
+.submit{
+  display: flex;
+  align-items: center;
+  margin-top: 40rpx;
+  margin-left: 60rpx;
+  margin-right: 60rpx;
+  height: 80rpx;
+  background: red;
+  color: white;
+  justify-content: center
+}

@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/desktop/desktop",
+    "pages/custom_info/custom_info",
     "pages/personal/personal",
-    
+    "pages/desktop/desktop",
     "pages/time/time",
     "pages/goods/goods",
     "pages/home/home",
@@ -10,6 +10,7 @@
     "pages/profile/profile",
     "pages/address_manager/address_manager",
     "pages/mock_order/mock_order"
+    
   ],
   "window": {
     "backgroundTextStyle": "dark",
