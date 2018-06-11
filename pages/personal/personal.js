@@ -1,4 +1,8 @@
 // pages/personal/personal.js
+
+// import isEmpty from '../../commom/util.js'
+// console.log(isEmpty)
+
 Page({
 
   /**
@@ -12,12 +16,16 @@ Page({
     goodsNumber: 1,
     goodsModel: '',
     goodsWarning: '',
-    categorysData: ['床类', '柜类', '家具类'],
-    subCategorysData: ['aaa', 'bbb', 'ccc'],
+
+    categoryDatas:{},
+    categorys: ['商品类别'],
+    subCategorys:[],
     catIndex: 0,
     subCatIndex: 0,
-    services: ['家具类', '灯具类', '卫浴类'],
-    servicesType: ['送货到楼下', '送货到家', '安装'],
+
+    servicesData:{},
+    services: [],
+    servicesType: [],
     serviceIndex: 0,
     serviceTypeIndex: 0
   },
@@ -26,7 +34,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log('on load')
+    this.categoryDatas  = require('../../data/productCategory')
+    this.categorys=[]
+    for (let key in this.categoryDatas){
+      this.categorys.push(key)
+    }
+    this.subCategorys = this.categoryDatas["柜类"]
 
+
+    this.servicesData = require('../../data/services')
+    console.log(this.servicesData)
+    this.services = []
+    for (let key in this.servicesData) {
+      this.services.push(key)
+    }
+    console.log(this.services)
+    this.servicesType = this.servicesData["家具类"]
+    console.log(this.servicesType)
+
+    this.setData({
+      categorys: this.categorys,
+      subCategorys:this.subCategorys,
+
+      services: this.services,
+      servicesType: this.servicesType
+    })
   },
 
   /**
@@ -220,5 +253,54 @@ Page({
     this.setData({
       serviceTypeIndex: e.detail.value
     })
+  },
+
+  submit: function (e) {
+    console.log('下一步')
+    let util = require('../../common/util')
+    let request = require('../../common/request')
+    let m = require('../../common/module')
+    console.log(m.add() + ' ' + m.sub() + ' ' + m.mul() + ' ' + m.div())
+    console.log(m)
+    // this.requestCat()
+    if (util.isEmpty(this.userName)) {
+      util.showToast('请输入联系人姓名')
+      return
+    }
+
+    if (util.isEmpty(this.userTel)) {
+      util.showToast('请输入联系人联系电话')
+      return
+    }
+
+
+
+    wx.navigateTo({
+      url: '../../pages/custom_info/custom_info'
+    })   
+  },
+
+  requestCat: function () {
+    // let request = require('../../common/request')
+    // let url = 'http://47.106.189.74/api/dict/cat/list'
+    // let data = { "parentId": "1" }
+    // let that = this;
+    // console.log(that.categorysData)
+    // request.request(url, data, function (res) {
+    //   console.log(res)
+    //   let data = res.data.data
+    //   for (let i = 0; i < data.length; i++) {
+    //     console.log(data[i])
+    //     that.data.oriCategorysData.push(data[i])
+    //     that.data.categorysData.push(data[i].name)
+    //   }
+
+    //   console.log(that.data.categorysData)
+
+    //   that.setData({
+    //     categorysData: that.data.categorysData
+    //   })
+    // })
   }
+
 })

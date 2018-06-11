@@ -5,14 +5,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    express:[],
+    expressIndex:0,
+    expressReact:["已到货","未到货"],
+    expressReactIndex:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    this.express = require('../../data/express')
+    this.setData({
+      express: this.express,
+
+    })
   },
 
   /**
@@ -62,5 +69,26 @@ Page({
    */
   onShareAppMessage: function () {
   
-  }
+  },
+
+   /**
+   * 物流公司选择
+   */
+  expressBindChange : function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      expressIndex: e.detail.value
+    })
+  },
+
+  /**
+   * 物流公司选择
+   */
+  expressReactBindChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      expressReactIndex: e.detail.value
+    })
+  },
+
 })

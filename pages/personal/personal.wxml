@@ -23,15 +23,15 @@
     <view class='products-category-wrapper'>
       <view>商品类别:</view>
       <view class='global-picker-wrapper'>
-        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">
-          <view>{{categorysData[catIndex]}}</view>
+        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorys}}">
+          <view>{{categorys[catIndex]}}</view>
         </picker>
 
         <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
       </view>
       <view class='global-picker-wrapper'>
-        <picker bindchange="subCategoryBindChange" value="{{subCatIndex}}" range="{{subCategorysData}}">
-          <view>{{subCategorysData[subCatIndex]}}</view>
+        <picker bindchange="subCategoryBindChange" value="{{subCatIndex}}" range="{{subCategorys}}">
+          <view>{{subCategorys[subCatIndex]}}</view>
         </picker>
         <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
       </view>

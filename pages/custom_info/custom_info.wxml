@@ -86,9 +86,9 @@
 
     <view class='third-express-info'>
       <view>物流公司:</view>
-      <view class='global-picker-wrapper'>请选择物流公司
-        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">
-          <view>{{categorysData[catIndex]}}</view>
+      <view class='global-picker-wrapper'>
+        <picker bindchange="expressBindChange" value="{{expressIndex}}" range="{{express}}">
+          <view>{{express[expressIndex]}}</view> 
         </picker>
 
         <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
@@ -96,10 +96,10 @@
     </view>
 
     <view class='third-express-info'>
-      <view>是否已到货:</view>
-      <view class='global-picker-wrapper'>货物是否已到地点
-        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">
-          <view>{{categorysData[catIndex]}}</view>
+      <view>货物是否已到物流点:</view>
+      <view class='global-picker-wrapper'>
+        <picker bindchange="expressReactBindChange" value="{{expressReactIndex}}" range="{{expressReact}}">
+          <view>{{expressReact[expressReactIndex]}}</view>
         </picker>
 
         <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
