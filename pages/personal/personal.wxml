@@ -15,6 +15,33 @@
 </view>
 
 
+<!--服务类目  -->
+<view>
+  <view class='global-title'>选择服务:</view>
+  <view class='service-content'>
+    <view>服务类目:</view>
+    <view class='global-picker-wrapper'>
+      <view wx:if="{{services.length <= 0}}" bindtap='clickService'>请选择服务类目</view>
+      <picker wx:if="{{services && services.length > 0}}" bindchange="bindServiceChange" value="{{serviceIndex}}" range="{{services}}" range-key="name">
+        <view>{{services[serviceIndex].name}}</view>
+      </picker>
+
+      <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+    </view>
+  </view>
+  <view class='service-content'>
+    <view>服务类型:</view>
+    <view class='global-picker-wrapper'>
+      <view wx:if="{{servicesType.length <= 0}}" bindtap='clickServiceType'>请选择服务类型</view>
+      <picker wx:if="{{servicesType && servicesType.length > 0}}" bindchange="bindServiceTypeChange" value="{{serviceTypeIndex}}" range="{{servicesType}}" range-key="name">
+        <view>{{servicesType[serviceTypeIndex].name}}</view>
+      </picker>
+
+      <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+    </view>
+  </view>
+</view>
+
 <!--商品信息  -->
 <view class=''>
   <view class='global-title'>商品信息：</view>
@@ -23,15 +50,17 @@
     <view class='products-category-wrapper'>
       <view>商品类别:</view>
       <view class='global-picker-wrapper'>
-        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorys}}">
-          <view>{{categorys[catIndex]}}</view>
+        <view wx:if="{{categorys.length <= 0}}" bindtap='clickCat'>商品类别</view>
+        <picker wx:if="{{categorys.length > 0}}" bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorys}}" range-key="name">
+          <view>{{categorys[catIndex].name}}</view>
         </picker>
 
         <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
       </view>
       <view class='global-picker-wrapper'>
-        <picker bindchange="subCategoryBindChange" value="{{subCatIndex}}" range="{{subCategorys}}">
-          <view>{{subCategorys[subCatIndex]}}</view>
+        <view wx:if="{{subCategorys.length <= 0}}" bindtap='clickSubCat'>商品子类别</view>
+        <picker wx:if="{{subCategorys.length > 0}}" bindchange="subCategoryBindChange" value="{{subCatIndex}}" range="{{subCategorys}}" range-key="name">
+          <view>{{subCategorys[subCatIndex].name}}</view>
         </picker>
         <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
       </view>
@@ -72,29 +101,6 @@
   </view>
 </view>
 
-<!--服务类目  -->
-<view>
-  <view class='global-title'>选择服务:</view>
-  <view class='service-content'>
-    <view >服务类目:</view>
-    <view class='global-picker-wrapper'>
-      <picker bindchange="bindServiceChange" value="{{serviceIndex}}" range="{{services}}">
-        <view>{{services[serviceIndex]}}</view>
-      </picker>
 
-      <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
-    </view>
-  </view>
-  <view class='service-content'>
-    <view >服务类型:</view>
-    <view class='global-picker-wrapper'>
-      <picker bindchange="bindServiceTypeChange" value="{{serviceTypeIndex}}" range="{{servicesType}}">
-        <view>{{servicesType[serviceTypeIndex]}}</view>
-      </picker>
-
-      <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
-    </view>
-  </view>
-</view>
 
 <button class='submit' bindtap='submit'>下一步</button>

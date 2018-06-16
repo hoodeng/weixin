@@ -18,22 +18,34 @@
     <view class='customer-address-wrapper'>
       <view>客户地址:</view>
       <view class='global-picker-wrapper'>
-        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">省份
-          <view>{{categorysData[catIndex]}}</view>
+        <view wx:if="{{provinces.length <= 0}}" bindtap= "clickProvince">省份</view>
+        <picker wx:if="{{provinces.length > 0}}" bindchange="provinceBindChange" value="{{provinceIndex}}" range="{{provinces}}" range-key="name">
+          <view>{{provinces[provinceIndex].name}}</view>
         </picker>
 
         <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
       </view>
       <view class='global-picker-wrapper'>
-        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">城市
-          <view>{{categorysData[catIndex]}}</view>
+        <view wx:if="{{citys.length <= 0}}" bindtap= "clickCity">城市</view>
+        <picker wx:if="{{citys.length > 0}}" bindchange="cityBindChange" value="{{cityIndex}}" range="{{citys}}" range-key="name">
+          <view>{{citys[cityIndex].name}}</view>
         </picker>
 
         <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
       </view>
       <view class='global-picker-wrapper'>
-        <picker bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorysData}}">区/县
-          <view>{{categorysData[catIndex]}}</view>
+        <view wx:if="{{ districts.length <= 0 }}" bindtap= "clickDistrict">区/县</view>
+        <picker wx:if="{{ districts.length > 0 }}" bindchange="districtBindChange" value="{{districtIndex}}" range="{{districts}}" range-key="name">
+          <view>{{districts[districtIndex].name}}</view>
+        </picker>
+
+        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+      </view>
+
+      <view class='global-picker-wrapper'>
+        <view wx:if="{{streets.length <= 0}}" bindtap= "clickStreet">街道</view>
+        <picker wx:if="{{streets.length > 0}}" bindchange="streetBindChange" value="{{streetIndex}}" range="{{streets}}" range-key="name">
+          <view>{{streets[streetIndex].name}}</view>
         </picker>
 
         <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
@@ -43,18 +55,20 @@
     <view class='contact-wrapper'>
       <view class='contact-item '>
         <view class='contact-item-label'>详细地址:</view>
-        <input class='contact-item-input' placeholder='请输入详细地址' bindinput='userTelBindInput'></input>
+        <input class='contact-item-input' placeholder='请输入详细地址' bindinput='addressBindInput'></input>
       </view>
     </view>
     <view class='global-divider'></view>
     <view>
       <view class='checkout-cancel-wrapper'>
         <view>*是否需要喵师傅核销?</view>
-        <checkbox class='checkout-cancel-switch' value='是否需要喵师傅核销?' checked='false'></checkbox>
+        <checkbox-group bindchange="needCheckedChange">
+          <checkbox class='checkout-cancel-switch' value='是否需要喵师傅核销?' checked='{{needCheckout}}'></checkbox>
+        </checkbox-group>
       </view>
-      <view class='checkout-ordersn-wrapper'>
+      <view wx:if="{{needCheckout}}" class='checkout-ordersn-wrapper'>
         <view>核销单号:</view>
-        <input placeholder='请输入核销单号'></input>
+        <input placeholder='请输入核销单号'  bindinput='checkoutBindInput'></input>
       </view>
     </view>
   </view>
@@ -66,45 +80,59 @@
   <view class='express-wrapper'>
     <view class='express-pick-address'>
       <view>提货地址:</view>
-      <input placeholder='请输入提货地址'></input>
+      <input placeholder='请输入提货地址' bindinput='takeAddressBindInput'></input>
     </view>
 
     <view class='express-pick-address'>
       <view>提货电话:</view>
-      <input placeholder='请输入提货电话'></input>
+      <input placeholder='请输入提货电话' bindinput='takeTelBindInput'></input>
     </view>
 
     <view class='express-pick-address'>
       <view>货物件数:</view>
-      <input value='1'></input>
+      <input value='1' bindinput='takeNumBindInput'></input>
     </view>
-    
+
     <view class='third-express-wrapper'>
       <view>*是否需要到第三方物流点提货?</view>
-      <checkbox class='checkout-cancel-switch' value='' checked='false'></checkbox>
+      <checkbox-group  bindchange="needExpressChange">
+        <checkbox class='checkout-cancel-switch' value='' checked='{{needExpress}}'></checkbox>
+      </checkbox-group>
+    
     </view>
 
-    <view class='third-express-info'>
-      <view>物流公司:</view>
-      <view class='global-picker-wrapper'>
-        <picker bindchange="expressBindChange" value="{{expressIndex}}" range="{{express}}">
-          <view>{{express[expressIndex]}}</view> 
-        </picker>
+    <view wx:if="{{needExpress}}">
+      <view class='third-express-info'>
+        <view>物流公司:</view>
+        <view class='global-picker-wrapper'>
+          <view wx:if="{{express.length <= 0}}" bindtap="clickExpress">请选择物流公司</view>
+          <picker wx:if="{{express.length > 0}}" bindchange="expressBindChange" value="{{expressIndex}}" range="{{express}}" range-key="name">
+            <view>{{express[expressIndex].name}}</view>
+          </picker>
 
-        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+          <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+        </view>
+      </view>
+
+      <view class='third-express-info'>
+        <view>货物是否已到物流点:</view>
+        <view class='global-picker-wrapper'>
+          <picker bindchange="expressReactBindChange" value="{{expressReactIndex}}" range="{{expressReact}}">
+            <view>{{expressReact[expressReactIndex]}}</view>
+          </picker>
+
+          <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+        </view>
+      </view>
+
+      <view class='third-express-info'>
+        <view>物流单号:</view>
+        <input placeholder='请输入物流单号' bindinput='expressNoBindInput'></input>
       </view>
     </view>
 
-    <view class='third-express-info'>
-      <view>货物是否已到物流点:</view>
-      <view class='global-picker-wrapper'>
-        <picker bindchange="expressReactBindChange" value="{{expressReactIndex}}" range="{{expressReact}}">
-          <view>{{expressReact[expressReactIndex]}}</view>
-        </picker>
-
-        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
-      </view>
-    </view>
   </view>
+
+  <button class='submit' bindtap='submit'>提交</button>
 
 </view>

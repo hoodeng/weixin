@@ -4,30 +4,32 @@
 // console.log(isEmpty)
 
 Page({
-
+  
   /**
    * 页面的初始数据
    */
   data: {
     userName: '',
     userTel: '',
+
     goodsCategory: '',
     goodsSubCategory: '',
     goodsNumber: 1,
     goodsModel: '',
     goodsWarning: '',
 
-    categoryDatas:{},
-    categorys: ['商品类别'],
-    subCategorys:[],
-    catIndex: 0,
-    subCatIndex: 0,
-
-    servicesData:{},
+ 
     services: [],
     servicesType: [],
-    serviceIndex: 0,
-    serviceTypeIndex: 0
+    serviceIndex: -1,
+    serviceTypeIndex: -1,
+
+    categorys: [],
+    subCategorys: [],
+    catIndex: -1,
+    subCatIndex: -1
+
+    
   },
 
   /**
@@ -35,31 +37,6 @@ Page({
    */
   onLoad: function (options) {
     console.log('on load')
-    this.categoryDatas  = require('../../data/productCategory')
-    this.categorys=[]
-    for (let key in this.categoryDatas){
-      this.categorys.push(key)
-    }
-    this.subCategorys = this.categoryDatas["柜类"]
-
-
-    this.servicesData = require('../../data/services')
-    console.log(this.servicesData)
-    this.services = []
-    for (let key in this.servicesData) {
-      this.services.push(key)
-    }
-    console.log(this.services)
-    this.servicesType = this.servicesData["家具类"]
-    console.log(this.servicesType)
-
-    this.setData({
-      categorys: this.categorys,
-      subCategorys:this.subCategorys,
-
-      services: this.services,
-      servicesType: this.servicesType
-    })
   },
 
   /**
@@ -118,8 +95,8 @@ Page({
     // this.setData({
     //   userName:e.detail.value
     // })
-    this.userName = e.detail.value
-    console.log(this.userName)
+    this.data.userName = e.detail.value
+    console.log(this)
   },
 
   /**
@@ -129,8 +106,8 @@ Page({
     // this.setData({
     //   userTel: e.detail.value
     // })
-    this.userTel = e.detail.value
-    console.log(this.userTel)
+    this.data.userTel = e.detail.value
+    console.log(this.data.userTel)
   },
 
   /**
@@ -138,9 +115,23 @@ Page({
    */
   categoryBindChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
+    console.log(e)
+    // let index = e.detail.value
+    // this.subCategorys = this.categoryDatas[this.categorys[index]]
+    // this.subCatIndex = 0
+    // this.setData({
+    //   catIndex: e.detail.value,
+    //   subCategorys: this.subCategorys,
+    //   subCatIndex: this.subCatIndex
+    // })
+
+    this.data.catIndex = +e.detail.value
+    console.log()
+    let parentId = this.data.categorys[+this.data.catIndex].id
     this.setData({
-      catIndex: e.detail.value
+      catIndex: this.data.catIndex 
     })
+    this.requestCat(parentId)
   },
 
   /**
@@ -162,6 +153,7 @@ Page({
     if (num && num < 1) {
       num = 1
     }
+    this.data.goodsNumber = num
     this.setData({
       goodsNumber: num
     })
@@ -192,6 +184,7 @@ Page({
     if (result < 1) {
       result = 1
     }
+    this.data.goodsNumber = result
     this.setData({
       goodsNumber: result
     })
@@ -206,9 +199,67 @@ Page({
     if (result < 1) {
       result = 1
     }
+    this.data.goodsNumber = result
     this.setData({
       goodsNumber: result
     })
+  },
+
+  clickService: function(e) {
+    console.log('click service')
+    this.getServices()
+  },
+
+  clickServiceType : function(e) {
+    console.log('click clickServiceType ' + this.data.serviceIndex)
+    let util = require('../../common/util')
+    if (this.data.serviceIndex < 0) {
+      util.showToast('请先选择服务类目')
+      return
+    }
+
+    console.log(this.data.services)
+    let parentId = this.data.services[this.data.serviceIndex].id
+    this.getServiceTypes(parentId)
+  },
+
+  clickCat: function (e) {
+    let util = require('../../common/util')
+    if (this.data.serviceIndex < 0) {
+      util.showToast('请先选择服务类目')
+      return
+    }
+
+    if (this.data.serviceTypeIndex < 0) {
+      util.showToast('请先选择服务类型')
+      return
+    }
+
+    let parentId = this.data.services[this.data.serviceIndex].id
+    console.log(parentId)
+    this.getCat(parentId)
+  },
+
+  clickSubCat: function (e) {
+    let util = require('../../common/util')
+    if (this.data.serviceIndex < 0) {
+      util.showToast('请先选择服务类目')
+      return
+    }
+
+    if (this.data.serviceTypeIndex < 0) {
+      util.showToast('请先选择服务类型')
+      return
+    }
+
+    if (this.data.catIndex < 0) {
+      util.showToast('请先商品类型')
+      return
+    }
+
+    let parentId = this.data.categorys[this.data.catIndex].id
+    console.log(parentId)
+    this.getSubCat(parentId)
   },
 
   /**
@@ -242,65 +293,160 @@ Page({
    * 选择服务类目
    */
   bindServiceChange: function (e) {
-    this.setData({
-      serviceIndex: e.detail.value
-    })
+    let index = e.detail.value
+    this.data.catIndex = index
+    console.log(this)
+    let parentId = this.data.services[index].id
+    this.getServiceTypes(parentId)
+    // if (this.serviceIndex !== +index) {
+    //   this.serviceIndex = index
+    //   this.serviceTypeIndex = 0
+    //   this.setData({
+    //     serviceIndex: this.serviceIndex,
+    //     serviceTypeIndex:this.serviceTypeIndex
+    // })
+    // }
   },
   /**
    * 选择服务类型
    */
   bindServiceTypeChange: function (e) {
+    this.serviceTypeIndex = e.detail.value
     this.setData({
-      serviceTypeIndex: e.detail.value
+      serviceTypeIndex: this.serviceTypeIndex
     })
   },
 
   submit: function (e) {
     console.log('下一步')
+    // this.cacheData()
     let util = require('../../common/util')
-    let request = require('../../common/request')
-    let m = require('../../common/module')
-    console.log(m.add() + ' ' + m.sub() + ' ' + m.mul() + ' ' + m.div())
-    console.log(m)
-    // this.requestCat()
-    if (util.isEmpty(this.userName)) {
+    if (util.isEmpty(this.data.userName)) {
       util.showToast('请输入联系人姓名')
       return
     }
 
-    if (util.isEmpty(this.userTel)) {
+    if (util.isEmpty(this.data.userTel)) {
       util.showToast('请输入联系人联系电话')
       return
     }
 
+    if (this.data.serviceIndex < 0) {
+      util.showToast('请输入服务类目')
+      return
+    }
 
+    if (this.data.serviceTypeIndex < 0) {
+      util.showToast('请输入服务类型')
+      return
+    }
 
+    if (this.data.catIndex < 0) {
+      util.showToast('请输入商品类别')
+      return
+    }
+    if (this.data.subCatIndex < 0) {
+      util.showToast('请输入商品子类别')
+      return
+    }
+
+    this.cacheData()
+    
     wx.navigateTo({
       url: '../../pages/custom_info/custom_info'
     })   
   },
 
-  requestCat: function () {
-    // let request = require('../../common/request')
-    // let url = 'http://47.106.189.74/api/dict/cat/list'
-    // let data = { "parentId": "1" }
-    // let that = this;
-    // console.log(that.categorysData)
-    // request.request(url, data, function (res) {
-    //   console.log(res)
-    //   let data = res.data.data
-    //   for (let i = 0; i < data.length; i++) {
-    //     console.log(data[i])
-    //     that.data.oriCategorysData.push(data[i])
-    //     that.data.categorysData.push(data[i].name)
-    //   }
+  cacheData: function(){
+    let order = getApp().orderObject
+    console.log(order)
+    order.orderCctName = this.data.userName
+    order.orderCctMobile = this.data.userTel
+    order.topCatId = this.data.services[this.data.serviceIndex].id
+    order.svrId = this.data.servicesType[this.data.serviceTypeIndex].id
+    order.Items = []
+    let goods = {}
+    goods.subCatId = this.data.categorys[this.data.catIndex].id
+    goods.leafCatId = this.data.subCategorys[this.data.subCatIndex].id
+    goods.itemNum = this.data.goodsNumber
+    goods.model = this.data.goodsModel
+    order.Items.push(goods)
 
-    //   console.log(that.data.categorysData)
+    console.log(order)
+  },
 
-    //   that.setData({
-    //     categorysData: that.data.categorysData
-    //   })
-    // })
+  getServices: function() {
+    let actions = require('../../common/networks')
+    let that =  this
+    console.log(this)
+    this.data.serviceIndex = 0
+    actions.getServices({},function(data){
+      that.data.services = data || []
+      console.log(that)
+      that.setData({
+        services : that.data.services,
+        serviceIndex: that.data.serviceIndex
+      })
+    },function(res){
+      console.log(res)
+    })
+  },
+
+  getServiceTypes : function (parentId){
+    let actions = require('../../common/networks')
+    let that = this
+    console.log(this)
+    let param = {
+      topCatId: parentId
+    }
+    this.data.serviceTypeIndex = 0
+    actions.getServicesType(param, function (data) {
+      that.data.servicesType = data || []
+      that.setData({
+        servicesType: that.data.servicesType,
+        serviceTypeIndex: that.data.serviceTypeIndex
+      })
+    }, function (res) {
+      console.log(res)
+    })
+  },
+
+  getCat: function (parentId) {
+    let actions = require('../../common/networks')
+    let that = this
+    let param = {
+      parentId
+    }
+    actions.getCat(param, function (data) {
+      that.data.categorys = data || []
+      that.data.catIndex = 0
+      console.log(that.data.categorys)
+      that.setData({
+        categorys: that.data.categorys,
+        catIndex: that.data.catIndex
+      })
+    }, function (res) {
+      console.log(res)
+    })
+  },
+
+  getSubCat: function(parentId) {
+    let actions = require('../../common/networks')
+    let that = this
+    let param = {
+      parentId
+    }
+    actions.getCat(param, function (data) {
+      that.data.subCategorys = data || []
+      that.data.subCatIndex = 0
+      console.log(that.data.categorys)
+      that.setData({
+        subCategorys: that.data.subCategorys,
+        subCatIndex: that.data.subCatIndex
+      })
+    }, function (res) {
+      console.log(res)
+    })
   }
 
 })

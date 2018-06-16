@@ -1,9 +1,11 @@
 {
   "pages": [
+      "pages/personal/personal",
     "pages/custom_info/custom_info",
-    "pages/personal/personal",
+  
     
     
+
     "pages/desktop/desktop",
     "pages/time/time",
     "pages/goods/goods",
