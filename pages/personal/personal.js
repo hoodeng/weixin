@@ -2,38 +2,43 @@
 
 
 Page({
+  
 
   /**
    * 页面的初始数据
    */
   data: {
+    //下单人信息
     userName: '',
     userTel: '',
 
-   
-
-
+    //服务选择
     services: [],
     servicesType: [],
     serviceIndex: -1,
     serviceTypeIndex: -1,
 
-    categorys: [],
-    catIndex: -1,
-    subCategorys: [],
-    subCatIndex: -1,
-    hasSubCat: false,//是否有子商品分类，不一定有
 
-    goodsCategory: '',
-    goodsSubCategory: '',
-    goodsNumber: 1,
-    goodsModel: '',
-    goodsWarning: '',
-    vLenght:0,
-    vWidth:0,
-    vHeight: 0,
-    weight:0
 
+    //商品数组
+    goodsArray: [
+      {
+        categorys: [
+        ],
+        catIndex: -1,
+        subCategorys: [],
+        subCatIndex: -1,
+        hasSubCat: false,//是否有子商品分类，不一定有
+
+        goodsNumber: 1,
+        goodsModel: '',
+        goodsWarning: '',
+        vLength: 0,
+        vWidth: 0,
+        vHeight: 0,
+        weight: 0
+      }
+    ]
   },
 
   /**
@@ -109,25 +114,73 @@ Page({
   },
 
   /**
+  * 选择服务类目
+  */
+  bindServiceChange: function (e) {
+    let index = e.detail.value
+    this.data.serviceIndex = index
+    this.data.servicesType = []
+    this.data.serviceTypeIndex = -1
+    this.data.categorys = []
+    this.data.catIndex = -1
+    this.data.subCategorys = []
+    this.data.subCatIndex = -1
+    this.data.hasSubCat = false
+    this.setData({
+      serviceIndex: this.data.serviceIndex,
+      servicesType: this.data.servicesType,
+      serviceTypeIndex: this.data.serviceTypeIndex,
+      categorys: this.data.categorys,
+      catIndex: this.data.catIndex,
+      subCategorys: this.data.subCategorys,
+      subCatIndex: this.data.subCatIndex,
+      hasSubCat: this.data.hasSubCat
+    })
+    let parentId = this.data.services[index].id
+    this.getServiceTypes(parentId)
+  },
+  /**
+   * 选择服务类型
+   */
+  bindServiceTypeChange: function (e) {
+    this.data.serviceTypeIndex = e.detail.value
+    this.setData({
+      serviceTypeIndex: this.data.serviceTypeIndex
+    })
+  },
+
+  /**
    * 商品类别选择
    */
   categoryBindChange: function (e) {
 
-    this.data.catIndex = +e.detail.value
-    let _catItem = this.data.categorys[+this.data.catIndex]
+    // this.data.catIndex = +e.detail.value
+    // let _catItem = this.data.categorys[+this.data.catIndex]
+    // let parentId = _catItem.id
+    // this.data.subCategorys = []
+    // this.data.subCatIndex = -1
+    // this.data.hasSubCat = (+_catItem.isLeaf == 0)
+    // this.setData({
+    //   catIndex: this.data.catIndex,
+    //   hasSubCat: this.data.hasSubCat,
+    //   subCategorys: this.data.subCategorys,
+    //   subCatIndex: this.data.subCatIndex
+    // })
+
+
+    console.log(e)
+    let index = e.currentTarget.dataset.index
+    let goods = this.data.goodsArray[index]
+
+    goods.catIndex = +e.detail.value
+    let _catItem = goods.categorys[+goods.catIndex]
     let parentId = _catItem.id
-    this.data.subCategorys = []
-    this.data.subCatIndex = -1
-    this.data.hasSubCat = (+_catItem.isLeaf == 0)
+    goods.subCategorys = []
+    goods.subCatIndex = -1
+    goods.hasSubCat = (+_catItem.isLeaf == 0)
     this.setData({
-      catIndex: this.data.catIndex,
-      hasSubCat: this.data.hasSubCat,
-      subCategorys: this.data.subCategorys,
-      subCatIndex: this.data.subCatIndex
+      goodsArray: this.data.goodsArray
     })
-    if (this.data.hasSubCat) {
-      this.requestCat(parentId)
-    }
   },
 
   /**
@@ -164,40 +217,72 @@ Page({
    * 特殊要求输入
    */
   bindWarningInput: function (e) {
-    this.data.goodsWarning = e.detail.value
+    // this.data.goodsWarning = e.detail.value
+    let index = e.currentTarget.dataset.index
+    let goods = this.data.goodsArray[index]
+    goods.goodsWarning = e.detail.value
+
+    console.log(goods)
   },
 
   vLengthBindInput: function (e) {
-    this.data.vLength = e.detail.value
-    console.log(this.data.vLength)
+    // this.data.vLength = e.detail.value
+
+    let index = e.currentTarget.dataset.index
+    let goods = this.data.goodsArray[index]
+    goods.vLength = e.detail.value
+    console.log(goods)
   },
 
   vWidthBindInput: function (e) {
-    this.data.vWidth = e.detail.value
-    console.log(this.data.vWidth)
+    // this.data.vWidth = e.detail.value
+    let index = e.currentTarget.dataset.index
+    let goods = this.data.goodsArray[index]
+    goods.vWidth = e.detail.value
+    console.log(goods)
   },
 
   vHeightBindInput: function (e) {
-    this.data.vHeight = e.detail.value
-    console.log(this.data.vHeight)
+    // this.data.vHeight = e.detail.value
+    let index = e.currentTarget.dataset.index
+    let goods = this.data.goodsArray[index]
+    goods.vHeight = e.detail.value
+    console.log(goods)
   },
 
-  vWeightBindInput: function (e) {
-    this.data.weight= e.detail.value
-    console.log(this.data.weight)
+  weightBindInput: function (e) {
+    // this.data.weight = e.detail.value
+
+    let index = e.currentTarget.dataset.index
+    let goods = this.data.goodsArray[index]
+    goods.weight = e.detail.value
+    console.log(goods)
   },
 
   /**
    * 数量增加
    */
   add: function (e) {
-    let result = +this.data.goodsNumber + 1
+    // let result = +this.data.goodsNumber + 1
+    // if (result < 1) {
+    //   result = 1
+    // }
+    // this.data.goodsNumber = result
+    // this.setData({
+    //   goodsNumber: result
+    // })
+
+    let index = e.currentTarget.dataset.index
+    let goods = this.data.goodsArray[index]
+
+
+    let result = +goods.goodsNumber + 1
     if (result < 1) {
       result = 1
     }
-    this.data.goodsNumber = result
+    goods.goodsNumber = result
     this.setData({
-      goodsNumber: result
+      goodsArray: this.data.goodsArray
     })
   },
 
@@ -205,13 +290,24 @@ Page({
    * 数量减少
    */
   reduce: function (e) {
-    let result = +this.data.goodsNumber - 1
+    // let result = +this.data.goodsNumber - 1
+    // if (result < 1) {
+    //   result = 1
+    // }
+    // this.data.goodsNumber = result
+    // this.setData({
+    //   goodsNumber: result
+    // })
+
+    let index = e.currentTarget.dataset.index
+    let goods = this.data.goodsArray[index]
+    let result = +goods.goodsNumber - 1
     if (result < 1) {
       result = 1
     }
-    this.data.goodsNumber = result
+    goods.goodsNumber = result
     this.setData({
-      goodsNumber: result
+      goodsArray: this.data.goodsArray
     })
   },
 
@@ -231,6 +327,7 @@ Page({
   },
 
   clickCat: function (e) {
+    console.log(e)
     let util = require('../../common/util')
     if (this.data.serviceIndex < 0) {
       util.showToast('请先选择服务类目')
@@ -242,8 +339,18 @@ Page({
       return
     }
 
+    // let parentId = this.data.services[this.data.serviceIndex].id
+    // this.getCat(parentId)
+
+
+    //test
+    let goods = e.currentTarget.dataset.item
+    let index = e.currentTarget.dataset.index
+    goods = this.data.goodsArray[index]
+    console.log(index)
+    console.log(goods)
     let parentId = this.data.services[this.data.serviceIndex].id
-    this.getCat(parentId)
+    this.getCat(goods, parentId)
   },
 
   clickSubCat: function (e) {
@@ -258,13 +365,27 @@ Page({
       return
     }
 
-    if (this.data.catIndex < 0) {
+    // if (this.data.catIndex < 0) {
+    //   util.showToast('请先商品类型')
+    //   return
+    // }
+    // let parentId = this.data.categorys[this.data.catIndex].id
+    // this.getSubCat(parentId)
+
+
+    let goods = e.currentTarget.dataset.item
+    let index = e.currentTarget.dataset.index
+    goods = this.data.goodsArray[index]
+
+    console.log(index)
+    console.log(goods)
+    if (goods.catIndex < 0) {
       util.showToast('请先商品类型')
       return
     }
+    let parentId = goods.categorys[goods.catIndex].id
+    this.getSubCat(goods, parentId)
 
-    let parentId = this.data.categorys[this.data.catIndex].id
-    this.getSubCat(parentId)
   },
 
   /**
@@ -292,41 +413,56 @@ Page({
     })
   },
 
-  /**
-   * 选择服务类目
-   */
-  bindServiceChange: function (e) {
-    let index = e.detail.value
-    this.data.serviceIndex = index
-    this.data.servicesType = []
-    this.data.serviceTypeIndex = -1
-    this.data.categorys = []
-    this.data.catIndex = -1
-    this.data.subCategorys = []
-    this.data.subCatIndex = -1
-    this.data.hasSubCat = false
-    this.setData({
-      serviceIndex: this.data.serviceIndex,
-      servicesType: this.data.servicesType,
-      serviceTypeIndex: this.data.serviceTypeIndex,
-      categorys: this.data.categorys,
-      catIndex: this.data.catIndex,
-      subCategorys: this.data.subCategorys,
-      subCatIndex: this.data.subCatIndex,
-      hasSubCat: this.data.hasSubCat
-    })
-    let parentId = this.data.services[index].id
-    this.getServiceTypes(parentId)
-  },
-  /**
-   * 选择服务类型
-   */
-  bindServiceTypeChange: function (e) {
-    this.data.serviceTypeIndex = e.detail.value
-    this.setData({
-      serviceTypeIndex: this.data.serviceTypeIndex
+
+
+  removeGoods: function (e) {
+    let that =this
+    wx.showModal({
+      title: '温馨提示',
+      content: '确认要删除商品吗',
+      success: function (res) {
+        if (res.confirm) {
+          let index = e.currentTarget.dataset.index
+          that.data.goodsArray.splice(index, 1)
+
+          that.setData({
+            goodsArray: that.data.goodsArray
+          })
+        } else if (res.cancel) {
+        }
+      }
     })
   },
+
+  addGoods: function (e) {
+    let goods = this.cloneEmptyGoods()
+    this.data.goodsArray.push(goods)
+    console.log('========================')
+    console.log(this.data.goodsArray)
+    this.setData({
+      goodsArray: this.data.goodsArray
+    })
+  },
+
+  cloneEmptyGoods: function () {
+    var newobj = {
+      categorys: [],
+      catIndex: -1,
+      subCategorys: [],
+      subCatIndex: -1,
+      hasSubCat: false,//是否有子商品分类，不一定有
+
+      goodsNumber: 1,
+      goodsModel: '',
+      goodsWarning: '',
+      vLength: 0,
+      vWidth: 0,
+      vHeight: 0,
+      weight: 0
+    }
+    return newobj
+  },
+
 
   submit: function (e) {
     let util = require('../../common/util')
@@ -350,14 +486,21 @@ Page({
       return
     }
 
-    if (this.data.catIndex < 0) {
-      util.showToast('请输入商品类别')
+    if (!this.data.goodsArray || this.data.goodsArray.length <=0) {
+      util.showToast('请添加商品')
       return
     }
-    if (this.data.hasSubCat && this.data.subCatIndex < 0) {
-      util.showToast('请输入商品子类别')
-      return
-    }
+
+    this.data.goodsArray.forEach((item) => {
+      if (item.catIndex < 0) {
+        util.showToast('请输入商品类别')
+        return
+      }
+      if (item.hasSubCat && item.subCatIndex < 0) {
+        util.showToast('请输入商品子类别')
+        return
+      }
+    })
 
     this.cacheData()
 
@@ -368,28 +511,33 @@ Page({
 
   cacheData: function () {
     let order = getApp().orderObject
-    order.orderCctName = this.data.userName
-    order.orderCctMobile = this.data.userTel
-    order.topCatId = this.data.services[this.data.serviceIndex].id
-    order.svrId = this.data.servicesType[this.data.serviceTypeIndex].id
+    let _data = this.data
+    order.orderCctName = _data.userName
+    order.orderCctMobile = _data.userTel
+    order.topCatId = _data.services[_data.serviceIndex].id
+    order.svrId = _data.servicesType[_data.serviceTypeIndex].id
 
     order.items = []
-    let goods = {}
-    goods.subCatId = this.data.categorys[this.data.catIndex].id
-    
-    if (this.data.hasSubCat) {
-      goods.leafCatId = this.data.subCategorys[this.data.subCatIndex].id
-    } else {
-      order.leafCatId = ''
-    }
-    goods.itemNum = this.data.goodsNumber
-    goods.model = this.data.goodsModel
-    goods.req = this.data.goodsWarning
-    goods.width = this.data.vWidth
-    goods.height = this.data.vHeight
-    goods.length = this.data.vLength
-    goods.weight = this.data.weight
-    order.items.push(goods)
+    _data.goodsArray.forEach((item)=>{
+      let goods = {}
+      goods.subCatId = item.categorys[item.catIndex].id
+
+      if (item.hasSubCat) {
+        goods.leafCatId = item.subCategorys[item.subCatIndex].id
+      } else {
+        // order.leafCatId = ''
+      }
+      goods.itemNum = item.goodsNumber
+      goods.model = item.goodsModel
+      goods.req = item.goodsWarning
+      goods.width = item.vWidth
+      goods.height = item.vHeight
+      goods.length = item.vLength
+      goods.weight = item.weight
+      order.items.push(goods)
+    }) 
+
+    console.log(order)
   },
 
   getServices: function () {
@@ -423,41 +571,71 @@ Page({
     })
   },
 
-  getCat: function (parentId) {
+  getCat: function (goods, parentId) {
     let actions = require('../../common/networks')
     let that = this
     let param = {
       parentId
     }
     actions.getCat(param, function (data) {
-      that.data.categorys = data || []
-      that.data.catIndex = 0
-      if (that.data.categorys.length > 0) {
-        let _catItem = that.data.categorys[that.data.catIndex]
-        that.data.hasSubCat = (+_catItem.isLeaf == 0)
+      // that.data.categorys = data || []
+      // that.data.catIndex = 0
+      // if (that.data.categorys.length > 0) {
+      //   let _catItem = that.data.categorys[that.data.catIndex]
+      //   that.data.hasSubCat = (+_catItem.isLeaf == 0)
+      // }
+
+      // that.setData({
+      //   categorys: that.data.categorys,
+      //   catIndex: that.data.catIndex,
+      //   hasSubCat: that.data.hasSubCat
+      // })
+
+
+      goods.categorys = data || []
+      goods.catIndex = 0
+      if (goods.categorys.length > 0) {
+        let _catItem = goods.categorys[goods.catIndex]
+        goods.hasSubCat = (+_catItem.isLeaf == 0)
       }
+      console.log(goods)
+      console.log(that.data.goodsArray)
 
       that.setData({
-        categorys: that.data.categorys,
-        catIndex: that.data.catIndex,
-        hasSubCat: that.data.hasSubCat
+        // categorys: that.data.categorys,
+        // catIndex: that.data.catIndex,
+        // hasSubCat: that.data.hasSubCat,
+
+        goodsArray: that.data.goodsArray
       })
     }, function (res) {
     })
   },
 
-  getSubCat: function (parentId) {
+  getSubCat: function (goods, parentId) {
     let actions = require('../../common/networks')
     let that = this
     let param = {
       parentId
     }
+    // actions.getCat(param, function (data) {
+    //   that.data.subCategorys = data || []
+    //   that.data.subCatIndex = 0
+    //   that.setData({
+    //     subCategorys: that.data.subCategorys,
+    //     subCatIndex: that.data.subCatIndex
+    //   })
+    // }, function (res) {
+    // })
+
     actions.getCat(param, function (data) {
-      that.data.subCategorys = data || []
-      that.data.subCatIndex = 0
+      goods.subCategorys = data || []
+      goods.subCatIndex = 0
       that.setData({
-        subCategorys: that.data.subCategorys,
-        subCatIndex: that.data.subCatIndex
+        // subCategorys: that.data.subCategorys,
+        // subCatIndex: that.data.subCatIndex
+
+        goodsArray: that.data.goodsArray
       })
     }, function (res) {
     })

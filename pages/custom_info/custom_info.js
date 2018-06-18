@@ -18,11 +18,19 @@ Page({
     streetIndex: -1,
     customAddress: '',//详细地址
 
+   //楼梯信息
+    stairsIndex:0,
+    stairs:['有电梯','无电梯'],
+    floor:'',
 
 
-
-    needCheckout: false,//是否需要核销
-    checkoutCode: '',//核销码
+    needJDCheckout: false,//是否需要喵师傅核销
+    needAliCheckout: false,//是否需要汪师傅核销
+    checkoutCodes: [
+      {
+        checkoutCode: '',//核销码
+      }
+    ],
 
     takeGoodsAddress: '',//提货地址
     takeGoodsTel: '',//提货电话
@@ -37,6 +45,7 @@ Page({
   },
 
   cacheData: function () {
+    let util = require('../../common/util')
     let order = getApp().orderObject
     let _data = this.data
     order.cstName = _data.customName
@@ -46,8 +55,26 @@ Page({
     order.cstAddrAreaCode = _data.districts[_data.districtIndex].code
     order.cstAddrDistrict = _data.streets[_data.streetIndex].code
     order.cstAddrDetail = _data.customAddress
-    order.verify = _data.needCheckout ? '1' : '0'
-    order.verifyCode = _data.needCheckout ? _data.checkoutCode : ''
+    order.bldLift = (_data.stairsIndex ==1)? '0':'1'
+    order.bldFloor = _data.floor
+    if (_data.needJDCheckout) {
+      order.verify = '1'
+    } else if (_data.needAliCheckout) {
+      order.verify = '2'
+    }else{
+      order.verify = '0'
+    }
+    order.verifyCode = ''
+    if (_data.needJDCheckout || _data.needAliCheckout) {
+      _data.checkoutCodes.forEach((item) => {
+        if (!util.isEmpty(item.checkoutCode)) {
+          if (order.verifyCode.length > 0) {
+            order.verifyCode = order.verifyCode + ','
+          }
+          order.verifyCode = order.verifyCode + item.checkoutCode 
+        }
+      })
+    }
     order.pkAddr = _data.takeGoodsAddress
     order.pkCctMobile = _data.takeGoodsTel
     order.pkgNum = _data.takeGoodsNum
@@ -56,16 +83,20 @@ Page({
       order.exprStatus = _data.expressReactIndex
       order.exprOrderNo = _data.expressOrderSn
     } else {
-      order.exprComId = ''
-      order.exprStatus = ''
-      order.exprOrderNo = ''
+      // order.exprComId = ''
+      // order.exprStatus = ''
+      // order.exprOrderNo = ''
     }
+    console.log(order)
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let s= ''
+    let s1= 'ss'
+    console.log(s.length + '  ' + s1.length)
   },
 
   /**
@@ -129,8 +160,15 @@ Page({
     this.data.customAddress = e.detail.value
   },
 
+  floorBindInput: function (e) {
+    this.data.floor = e.detail.value
+  },
+
   checkoutBindInput: function (e) {
-    this.data.checkoutCode = e.detail.value
+    // this.data.checkoutCode = e.detail.value
+    let index = e.currentTarget.dataset.index
+    let itemCode = this.data.checkoutCodes[index]
+    itemCode.checkoutCode = e.detail.value
   },
 
   takeAddressBindInput: function (e) {
@@ -274,10 +312,44 @@ Page({
     })
   },
 
-  needCheckedChange: function (e) {
-    this.data.needCheckout = !this.data.needCheckout
+  stairsBindChange: function (e) {
+    this.data.stairsIndex = e.detail.value
     this.setData({
-      needCheckout: this.data.needCheckout
+      stairsIndex: this.data.stairsIndex
+    })
+  },
+
+  needCheckedChange: function (e) {
+    this.data.needJDCheckout = !this.data.needJDCheckout
+    if (this.data.needJDCheckout) {
+      this.data.needAliCheckout = false
+    }
+    this.setData({
+      needJDCheckout: this.data.needJDCheckout,
+      needAliCheckout:this.data.needAliCheckout
+    })
+  },
+
+  needAliCheckedChange: function (e) {
+    this.data.needAliCheckout = !this.data.needAliCheckout
+    if (this.data.needAliCheckout) {
+      this.data.needJDCheckout = false
+    }
+    this.setData({
+      needAliCheckout: this.data.needAliCheckout,
+      needJDCheckout:this.data.needJDCheckout
+    })
+  },
+
+  
+
+  addCheckoutCode: function(e) {
+    let _code = {
+      'checkoutCode':''
+    }
+    this.data.checkoutCodes.push(_code)
+    this.setData({
+      checkoutCodes:this.data.checkoutCodes
     })
   },
 
@@ -325,9 +397,17 @@ Page({
       return
     }
 
-    if (_data.needCheckout && util.isEmpty(_data.checkoutCode)) {
-      util.showToast('请输入核销码')
-      return
+    if (_data.needJDCheckout || _data.needAliCheckout) {
+      let hasCheckoutCode = false
+      _data.checkoutCodes.forEach((item) => {
+        if (!util.isEmpty(item.checkoutCode)) {
+          hasCheckoutCode = true
+        }
+      })
+      if (!hasCheckoutCode) {
+        util.showToast('请输入核销码')
+        return
+      }
     }
 
     if (util.isEmpty(_data.takeGoodsAddress)) {
@@ -360,61 +440,16 @@ Page({
 
 
   createOrder: function () {
+    console.log('create order')
     let request = require('../../common/request')
     let util = require('../../common/util')
-    let url = 'https://pgykeji.com/api/user/order/create'
-
-    // let dataJson = {
-    //   'orderCctName': 'test',
-    //   'orderCctMobile': '18812345678',
-    //   'topCatId': '1',
-    //   'svrId': '1',
-    //   'cstName': 'zhang',
-    //   'cstMobile': '12345678999',
-    //   'cstAddrProvCode': '001',
-    //   'cstAddrCityCode': '002',
-    //   'cstAddrAreaCode': '003',
-    //   'cstAddrDistrict': '004',
-    //   'bldLift': '',
-    //   'bldFloor': '',
-    //   'verify': '0',
-
-    //   'exprStatus': '222',
-    //   'exprComId': '333',
-    //   'exprOrderNo': '444',
-    //   'pkCctName': '555',
-    //   'pkCctMobile': '666',
-    //   'pkAddrProvCode': '777',
-    //   'pkAddrCityCode': '888',
-    //   'pkAddrAreaCode': '999',
-    //   'pkAddrDistrict': '777',
-    //   'preFrPay': '777',
-    //   'pkgNum': '666',
-    //   'specialReq': '666',
-
-    //   'Items': [
-    //     {
-    //       'subCatId': '001',
-    //       'leafCatId': '002',
-    //       'img': '',
-    //       'itemNum': '1',
-    //       'model': '222',
-    //       'width': '30',
-    //       'height': '20',
-    //       'length': '30',
-    //       'weight': '5',
-    //     }
-    //   ]
-    // }
-
-
     let dataJson = getApp().orderObject
     let dataStr = JSON.stringify(dataJson)
 
     let params = {
       'data': dataStr
     }
-
+    console.log(dataStr)
     let actions = require('../../common/networks')
     let that = this
     actions.createOrder(params, function (data) {

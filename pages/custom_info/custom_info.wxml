@@ -1,6 +1,6 @@
 <!--pages/custom_info/custom_info.wxml-->
 <view>
-  <view class='global-title'>收货人信息</view>
+  <view class='global-title'>收货人</view>
   <view class='global-content'>
     <view class='contact-wrapper'>
       <view class='contact-item '>
@@ -9,7 +9,7 @@
       </view>
       <view class='contact-item '>
         <view class='contact-item-label'>手机号码:</view>
-        <input class='contact-item-input' placeholder='请输入联系电话' bindinput='userTelBindInput'></input>
+        <input class='contact-item-input' placeholder='请输入联系电话' bindinput='userTelBindInput'type='number'></input>
       </view>
     </view>
 
@@ -71,24 +71,51 @@
       </view>
     </view>
     <view class='global-divider'></view>
-    <view>
-      <view class='checkout-cancel-wrapper'>
-        <view style='color:#FF4500'>*是否需要喵师傅核销?</view>
-        <checkbox-group bindchange="needCheckedChange">
-          <checkbox class='checkout-cancel-switch' value='是否需要喵师傅核销?' checked='{{needCheckout}}'></checkbox>
+
+    <view class='customer-address-wrapper'>
+      <view style='color:#333;'>楼层电梯:</view>
+      <view class='global-picker-wrapper'>
+        <picker bindchange="stairsBindChange" value="{{stairsIndex}}" range="{{stairs}}">
+          <view>{{stairs[stairsIndex]}}</view>
+        </picker>
+
+        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
+      </view>
+
+      <view wx:if="{{stairsIndex == 1}}"class='global-picker-wrapper'>
+        <input style='width:140rpx;' placeholder='楼高几层' type='number' bindinput='floorBindInput'></input>
+      </view>
+    </view>
+
+    <view class='global-divider' style='margin-top:20rpx;'></view>
+
+    <view style='padding-bottom:20rpx;'>
+      <view class='checkout-cancel-wrapper' style='color:#FF4500'>
+        <view style='color:#888'>*是否需要核销?</view>
+        <checkbox-group style='margin-left:20rpx;' bindchange="needCheckedChange">喵师傅
+          <checkbox class='checkout-cancel-switch' checked='{{needJDCheckout}}'></checkbox>
+        </checkbox-group>
+        <checkbox-group style='margin-left:40rpx;' bindchange="needAliCheckedChange">汪师傅
+          <checkbox class='checkout-cancel-switch' checked='{{needAliCheckout}}'></checkbox>
         </checkbox-group>
       </view>
-      <view wx:if="{{needCheckout}}" class='checkout-ordersn-wrapper'>
-        <view style='color:#333;'>核销单号:</view>
-        <input placeholder='请输入核销单号' bindinput='checkoutBindInput'></input>
+
+      <view wx:if="{{needJDCheckout || needAliCheckout}}" wx:for="{{checkoutCodes}}" wx:for-index="idx" wx:for-item="item">
+        <view class='checkout-ordersn-wrapper'>
+          <view style='color:#333;'>核销单号:</view>
+          <input placeholder='请输入核销单号' bindinput='checkoutBindInput' data-item='{{item}}' data-index='{{idx}}'></input>
+        </view>
+
+        <view class='global-divider'></view>
       </view>
+      <view wx:if="{{needJDCheckout || needAliCheckout}}" class='add-checkout-sn' bindtap='addCheckoutCode'>添加核销单号</view>
     </view>
   </view>
 
 </view>
 
 <view>
-  <view class='global-title'>提货信息</view>
+  <view class='global-title'>提货</view>
   <view class='express-wrapper'>
     <view class='express-pick-address'>
       <view style='color:#333;'>提货地址:</view>
@@ -97,12 +124,12 @@
 
     <view class='express-pick-address'>
       <view style='color:#333;'>提货电话:</view>
-      <input style='margin-left:10rpx;' placeholder='请输入提货电话' bindinput='takeTelBindInput'></input>
+      <input style='margin-left:10rpx;' placeholder='请输入提货电话' bindinput='takeTelBindInput' type='number'></input>
     </view>
 
     <view class='express-pick-address'>
       <view style='color:#333;'>货物件数:</view>
-      <input style='margin-left:10rpx;' value='1' bindinput='takeNumBindInput'></input>
+      <input style='margin-left:10rpx;' value='1' bindinput='takeNumBindInput' type='number'></input>
     </view>
     <view class='global-divider' style='margin-left:0rpx;margin-top:10rpx;'></view>
     <view class='third-express-wrapper'>

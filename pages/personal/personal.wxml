@@ -1,3 +1,17 @@
+<wxs module="util">
+  var getCatName = function(item, index) {
+    return item.categorys[index].name
+  }
+  var getSubCatName = function(item, index) {
+    return item.subCategorys[index].name
+  }
+  module.exports = {
+    getCatName: getCatName,
+    getSubCatName: getSubCatName
+  }
+</wxs>
+
+
 <!--联系人信息  -->
 <view>
   <view class='global-title'>下单人：</view>
@@ -44,79 +58,88 @@
 
 <!--商品信息  -->
 <view class=''>
-  <view class='global-title'>货品：</view>
+  <view class='global-title'>货品:</view>
 
-  <view class='product-info-content'>
-    <view class='products-category-wrapper'>
-      <view style='color:#333;'>商品类别:</view>
-      <view class='global-picker-wrapper'>
-        <view wx:if="{{categorys.length <= 0}}" bindtap='clickCat'>商品类别</view>
-        <picker wx:if="{{categorys.length > 0}}" bindchange="categoryBindChange" value="{{catIndex}}" range="{{categorys}}" range-key="name">
-          <view>{{categorys[catIndex].name}}</view>
-        </picker>
 
-        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
-      </view>
-      <view wx:if="{{hasSubCat}}" class='global-picker-wrapper'>
-        <view wx:if="{{subCategorys.length <= 0}}" bindtap='clickSubCat'>商品子类别</view>
-        <picker wx:if="{{subCategorys.length > 0}}" bindchange="subCategoryBindChange" value="{{subCatIndex}}" range="{{subCategorys}}" range-key="name">
-          <view>{{subCategorys[subCatIndex].name}}</view>
-        </picker>
-        <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
-      </view>
-    </view>
+  <view wx:for="{{goodsArray}}" wx:for-index="idx" wx:for-item="item">
+    <view class='product-info-content'>
+      <view class='products-category-wrapper'>
+        <view style='color:#333;'>商品类别:</view>
+        <view class='global-picker-wrapper'>
+          <view wx:if="{{item.categorys.length <= 0}}" bindtap='clickCat' data-item='{{item}}' data-index='{{idx}}'>商品类别</view>
+          <picker wx:if="{{item.categorys.length > 0}}" bindchange="categoryBindChange" value="{{item.catIndex}}" range="{{item.categorys}}" range-key="name" data-item='{{item}}' data-index='{{idx}}'>
+            <view>{{util.getCatName(item,item.catIndex)}}</view>
+          </picker>
 
-    <view class='goods_weight_op'>
-      <text style='color:#333;'>商品数量:</text>
-      <image bindtap="add" class='op_img' src='../../resources/add.png' style='margin-left:8rpx;'></image>
-      <view class='goods_weight_text'>
-        <input class='goods_weight_input' maxlength='4' type="number" value='{{goodsNumber}}' bindinput='bindNumberInput' />
-      </view>
-      <image bindtap='reduce' class='op_img' src='../../resources/reduce.png'></image>
-    </view>
-
-    <!-- <view class='product-model'>
-      <view class='global-label' style='color:#333;'>商品型号:</view>
-      <input class='global-input' bindinput='bindModelInput'></input>
-    </view> -->
-
-    <view class='product-model'>
-      <view class='global-label' style='color:#333;'>商品体积:</view>
-      <input class='product-v-input' bindinput='bindModelInput' placeholder='长度cm' bindinput='vLengthBindInput' />
-      <view style='margin-left:10rpx'>X</view>
-      <input class='product-v-input' bindinput='bindModelInput' placeholder='宽度cm' bindinput='vWidthBindInput' />
-      <view style='margin-left:10rpx'>X</view>
-      <input class='product-v-input' bindinput='product-v-input' placeholder='高度cm' bindinput='vHeightBindInput' />
-    </view>
-
-    <view class='product-model'>
-      <view class='global-label' style='color:#333;'>商品重量:</view>
-      <input class='product-v-input' bindinput='weightBindInput' placeholder='重量kg' />
-    </view>
-
-    <view class='product-notify'>
-      <view class='global-label' style='color:#333;'>特殊要求:</view>
-      <input class='global-input' bindinput='bindWarningInput' placeholder='有什么需要对师傅说的？'></input>
-    </view>
-
-    <!--添加照片  -->
-    <view class='upload-images-wrapper'>
-      <view class='global-label'>上传商品照片？</view>
-      <view class='selected-image'>
-        <view wx:for="{{imageUrls}}" wx:for-index="idx" wx:for-item="image">
-          <image class='upload-image' src='{{image}}'></image>
+          <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
         </view>
-        <view class='add-image-wrapper' wx:if='{{!imageUrls ||  imageUrls.length < 1}}'>
-          <image class='add-image' src='../../image/image-add.png' bindtap='takePhoto'></image>
+        <view wx:if="{{item.hasSubCat}}" class='global-picker-wrapper'>
+          <view wx:if="{{item.subCategorys.length <= 0}}" bindtap='clickSubCat' data-item='{{item}}' data-index='{{idx}}'>商品子类别</view>
+          <picker wx:if="{{item.subCategorys.length > 0}}" bindchange="subCategoryBindChange" value="{{item.subCatIndex}}" range="{{item.subCategorys}}" range-key="name" data-item='{{item}}' data-index='{{idx}}'>
+            <view>{{util.getSubCatName(item,item.subCatIndex)}}</view>
+          </picker>
+          <image class='global-picker-arrow' src='../../image/ic_down_arrow.png'></image>
         </view>
       </view>
+
+      <view class='goods_weight_op'>
+        <text style='color:#333;'>商品数量:</text>
+        <image bindtap="add" class='op_img' src='../../resources/add.png' style='margin-left:8rpx;' data-item='{{item}}' data-index='{{idx}}'></image>
+        <view class='goods_weight_text'>
+          {{item.goodsNumber}}
+        </view>
+        <image bindtap='reduce' class='op_img' src='../../resources/reduce.png' data-item='{{item}}' data-index='{{idx}}'></image>
+      </view>
+
+      <view class='product-model'>
+        <view class='global-label' style='color:#333;'>商品体积:</view>
+        <input class='product-v-input' bindinput='bindModelInput' placeholder='长度cm' bindinput='vLengthBindInput' type='number' data-item='{{item}}' data-index='{{idx}}' />
+        <view style='margin-left:10rpx'>X</view>
+        <input class='product-v-input' bindinput='bindModelInput' placeholder='宽度cm' bindinput='vWidthBindInput' type='number' data-item='{{item}}' data-index='{{idx}}' />
+        <view style='margin-left:10rpx'>X</view>
+        <input class='product-v-input' bindinput='product-v-input' placeholder='高度cm' bindinput='vHeightBindInput' type='number' data-item='{{item}}' data-index='{{idx}}' />
+      </view>
+
+      <view class='product-model'>
+        <view class='global-label' style='color:#333;'>商品重量:</view>
+        <input class='product-v-input' bindinput='weightBindInput' placeholder='重量kg' type='number' data-item='{{item}}' data-index='{{idx}}' />
+      </view>
+
+      <view class='product-notify'>
+        <view class='global-label' style='color:#333;'>特殊要求:</view>
+        <input class='global-input' bindinput='bindWarningInput' placeholder='有什么需要对师傅说的?' data-item='{{item}}' data-index='{{idx}}'></input>
+      </view>
+
+      <!--添加照片  -->
+      <view wx:if='{{false}}' class='upload-images-wrapper'>
+        <view class='global-label'>上传商品照片？</view>
+        <view class='selected-image'>
+          <view wx:for="{{item.imageUrls}}" wx:for-index="idx" wx:for-item="image">
+            <image class='upload-image' src='{{image}}'></image>
+          </view>
+          <view class='add-image-wrapper' wx:if='{{!item.imageUrls ||  item.imageUrls.length < 1}}'>
+            <image class='add-image' src='../../image/image-add.png' bindtap='takePhoto'></image>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!--删除商品  -->
+    <view class='remove-wrapper'>
+      <button class='remove-view' data-item='{{item}}' data-index='{{idx}}' bindtap='removeGoods'>删除商品</button>
+    </view>
+    <view class='global-divider'></view>
+  </view>
+
+  <!--增加商品  -->
+  <view class='add-goods-wrapper'>
+    <view class='global-label'>添加商品?</view>
+    <view class='add-goods' bindtap='addGoods'>
+      <image class='add-goods-view' src='../../image/image-add.png'></image>
     </view>
   </view>
+
+
 </view>
-
-
-
-
-
 
 <button class='submit' bindtap='submit'>下一步</button>

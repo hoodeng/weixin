@@ -4,6 +4,7 @@
   padding: 20rpx;
   color: #333;
   font-size: 32rpx;
+  font-weight: bolder;
 }
 
 .global-divider {
@@ -190,6 +191,47 @@
 }
 
 .add-image {
+  width: 75rpx;
+  height: 75rpx;
+  align-items: center;
+}
+
+.remove-wrapper{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  flex-direction: row;
+  background: white;
+  padding-bottom: 20rpx;
+}
+
+.remove-view{
+  height: 80rpx;
+  padding-left: 80rpx;
+  padding-right: 80rpx;
+  font-size: 32rpx;
+  color:#888;
+  align-items: center
+}
+
+.add-goods-wrapper{
+  width: 100%;
+  background: white;
+  padding: 20rpx
+}
+.add-goods{
+  border-width: 1rpx 1rpx 1rpx 1rpx;
+  border-style: solid;
+  border-color: #888888;
+  justify-content: center;
+  padding-left: 8rpx;
+  padding-top: 8rpx;
+  margin-top: 10rpx;
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.add-goods-view{
   width: 75rpx;
   height: 75rpx;
   align-items: center;
