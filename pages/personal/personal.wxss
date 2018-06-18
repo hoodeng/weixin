@@ -3,6 +3,7 @@
 .global-title {
   padding: 20rpx;
   color: #333;
+  font-size: 32rpx;
 }
 
 .global-divider {
@@ -13,17 +14,19 @@
 
 .contact-wrapper {
   background: white;
-  font-size: 23rpx;
+  font-size: 28rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
-  color: #888888;
+  color: #888;
 }
 
 .contact-item {
+  height: 80rpx;
   padding-top: 10rpx;
   padding-bottom: 10rpx;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .contact-item-label {
@@ -33,6 +36,7 @@
   align-items: center;
   text-align: center;
   white-space: nowrap;
+  color: #333;
 }
 
 .contact-item-input {
@@ -44,20 +48,22 @@
   align-items: center;
 }
 
-.product-info-content{
+.product-info-content {
   background: white;
   font-size: 23rpx;
-  color: #888888;
+  color: #888;
 }
 
 .products-category-wrapper {
   display: flex;
   flex-direction: row;
   padding: 20rpx;
+  font-size: 28rpx;
+  align-items: center;
 }
 
 .global-picker-wrapper {
-  height: 40rpx;
+  height: 60rpx;
   border: 1rpx;
   border-style: solid;
   padding-left: 20rpx;
@@ -76,46 +82,61 @@
   margin-left: 20rpx;
 }
 
-
-.goods_weight_op{
+.goods_weight_op {
   margin-left: 20rpx;
-  justify-content: center;
   display: flex;
   flex-direction: row;
+  font-size: 28rpx;
+  align-items: center;
 }
 
-.goods_weight_text{
+.goods_weight_text {
   width: 60rpx;
   min-width: 40rpx;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
-  text-align: center
+  text-align: center;
 }
 
-.goods_weight_input{
+.goods_weight_input {
   display: flex;
-  justify-content: center;   
+  justify-content: center;
   align-items: center;
 }
 
-.op_img{
-  width: 40rpx;
-  height: 40rpx;
+.op_img {
+  width: 60rpx;
+  height: 60rpx;
   border: 1rpx;
   border-style: solid;
 }
 
-
-.product-model{
+.product-model {
   display: flex;
   flex-direction: row;
-  padding: 20rpx;
+  padding-left: 20rpx;
+  padding-top: 20rpx;
   align-items: center;
+  font-size: 28rpx;
 }
 
-.global-input{
+.product-v-input {
+  width: 120rpx;
+  min-height: 60rpx;
+  margin-left: 10rpx;
+  border: 1rpx;
+  border-style: solid;
+  display: flex;
+  justify-content: center;
+  padding-left: 10rpx;
+  align-items: center;
+  font-size: 28rpx;
+}
+
+.global-input {
   width: 800rpx;
+  height: 60rpx;
   margin-left: 10rpx;
   border: 1rpx;
   border-style: solid;
@@ -125,23 +146,27 @@
   padding-right: 20rpx;
 }
 
-.product-notify{
+.product-notify {
   display: flex;
   flex-direction: row;
   padding: 20rpx;
   align-items: center;
+  font-size: 28rpx;
 }
 
-.global-label{
-  white-space: nowrap; 
+.global-label {
+  white-space: nowrap;
 }
 
 .upload-images-wrapper {
-  
+  padding: 20rpx;
+  align-items: center;
+  font-size: 28rpx;
+  color: #333
 }
 
 .selected-image {
-  padding: 20rpx;
+  padding-top: 20rpx;
   display: flex;
   flex-direction: row;
   background: white;
@@ -154,8 +179,8 @@
 }
 
 .add-image-wrapper {
-  border-width: 1rpx 1rpx 1rpx 1rpx;  
-  border-style: solid; 
+  border-width: 1rpx 1rpx 1rpx 1rpx;
+  border-style: solid;
   border-color: gray;
   justify-content: center;
   padding-left: 8rpx;
@@ -164,32 +189,31 @@
   height: 80rpx;
 }
 
-.add-image{
- width: 75rpx;
- height: 75rpx;
- align-items: center;
+.add-image {
+  width: 75rpx;
+  height: 75rpx;
+  align-items: center;
 }
 
-
-
-.service-content{
+.service-content {
   display: flex;
   padding: 20rpx;
   flex-direction: row;
-  font-size: 23rpx;
+  font-size: 28rpx;
   align-items: center;
-  color: #888888;
-  background: white
+  color: #888;
+  background: white;
 }
 
-.submit{
+.submit {
   display: flex;
   align-items: center;
   margin-top: 40rpx;
   margin-left: 60rpx;
   margin-right: 60rpx;
+  margin-bottom: 80rpx;
   height: 80rpx;
   background: red;
   color: white;
-  justify-content: center
+  justify-content: center;
 }

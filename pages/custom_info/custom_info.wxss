@@ -3,6 +3,7 @@
 .global-title {
   padding: 20rpx;
   color: #333;
+  font-size: 32rpx;
 }
 
 .global-divider {
@@ -14,6 +15,7 @@
 
 .global-content{
   background: white; 
+  font-size: 28rpx;
 }
 
 .contact-wrapper {
@@ -21,12 +23,16 @@
   font-size: 23rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
+  align-items: center;
   color: #888;
 }
 
 .contact-item {
   display: flex;
   flex-direction: row;
+  font-size: 28rpx;
+  height: 80rpx;
+  align-items: center;
 }
 
 .contact-item-label {
@@ -36,6 +42,7 @@
   align-items: center;
   text-align: center;
   white-space: nowrap;
+  color: #333;
 }
 
 .contact-item-input {
@@ -48,7 +55,8 @@
 }
 
 .global-picker-wrapper {
-  height: 40rpx;
+  min-width: 140rpx;
+  height: 60rpx;
   border: 1rpx;
   border-style: solid;
   padding-left: 6rpx; 
@@ -67,50 +75,55 @@
 }
 
 .customer-address-wrapper {
+  min-width: 100rpx;
   display: flex;
   flex-direction: row;
-  padding: 20rpx;
+  padding-left: 20rpx;
+  padding-top: 20rpx;
   background: white;
-  font-size: 23rpx;
+  font-size: 28rpx;
   color: #888;
+  align-items: center;
 }
 
 .checkout-cancel-wrapper {
   background: white;
-  font-size: 23rpx;
+  font-size: 28rpx;
   display: flex;
   flex-direction: row;
   padding: 20rpx;
-  color: #888;
+  color: #333;
+  align-items: center;
 }
 
 .checkout-cancel-switch {
-  width: 20rpx;
-  height: 20rpx;
-  zoom: 60%;
+  width: 40rpx;
+  height: 40rpx;
+  zoom: 80%;
   align-items: center;
-  align-content: center;
   margin-left: 20rpx;
 }
 
 .checkout-ordersn-wrapper {
   background: white;
-  font-size: 23rpx;
+  font-size: 28rpx;
   display: flex;
   flex-direction: row;
   padding-left: 20rpx;
+  padding-bottom:20rpx; 
   color: #888;
   align-items: center;
 }
 
 .express-wrapper {
   background: white;
-  font-size: 24rpx;
+  font-size: 28rpx;
   color: #888;
   padding: 20rpx;
 }
 
 .express-pick-address {
+  min-height: 60rpx;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -120,7 +133,8 @@
 .third-express-wrapper{
   display: flex;
   flex-direction: row;
-  margin-top: 10rpx;
+  margin-top: 20rpx;
+  font-size: 28rpx;
 }
 
 .third-express-info{
@@ -137,6 +151,7 @@
   margin-top: 40rpx;
   margin-left: 60rpx;
   margin-right: 60rpx;
+  margin-bottom: 60rpx;
   height: 80rpx;
   background: red;
   color: white;

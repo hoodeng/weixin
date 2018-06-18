@@ -18,7 +18,7 @@ Page({
     streetIndex: -1,
     customAddress: '',//详细地址
 
-   
+
 
 
     needCheckout: false,//是否需要核销
@@ -26,7 +26,7 @@ Page({
 
     takeGoodsAddress: '',//提货地址
     takeGoodsTel: '',//提货电话
-    takeGoodsNum:1,
+    takeGoodsNum: 1,
     needExpress: false,//是否需要到物流点提货
 
     express: [],
@@ -39,39 +39,33 @@ Page({
   cacheData: function () {
     let order = getApp().orderObject
     let _data = this.data
-    console.log(order)
     order.cstName = _data.customName
     order.cstMobile = _data.customTel
     order.cstAddrProvCode = _data.provinces[_data.provinceIndex].code
     order.cstAddrCityCode = _data.citys[_data.cityIndex].code
     order.cstAddrAreaCode = _data.districts[_data.districtIndex].code
     order.cstAddrDistrict = _data.streets[_data.streetIndex].code
-    order.detailAddress = _data.customAddress
+    order.cstAddrDetail = _data.customAddress
     order.verify = _data.needCheckout ? '1' : '0'
-    order.verifyNo = _data.needCheckout ? _data.checkoutCode : ''
-    order.pkAddress = _data.takeGoodsAddress
+    order.verifyCode = _data.needCheckout ? _data.checkoutCode : ''
+    order.pkAddr = _data.takeGoodsAddress
     order.pkCctMobile = _data.takeGoodsTel
     order.pkgNum = _data.takeGoodsNum
-    if (_data.needExpress){
+    if (_data.needExpress) {
       order.exprComId = _data.express[_data.expressIndex].id
       order.exprStatus = _data.expressReactIndex
       order.exprOrderNo = _data.expressOrderSn
-    }else{
+    } else {
       order.exprComId = ''
       order.exprStatus = ''
       order.exprOrderNo = ''
     }
-    
-    console.log(order)
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log('custom page')
-    let order = getApp().orderObject
-    console.log(order)
   },
 
   /**
@@ -123,46 +117,38 @@ Page({
 
   },
 
-  userNameBindInput: function(e) {
+  userNameBindInput: function (e) {
     this.data.customName = e.detail.value
-    console.log(this)
   },
 
   userTelBindInput: function (e) {
     this.data.customTel = e.detail.value
-    console.log(this)
   },
 
   addressBindInput: function (e) {
     this.data.customAddress = e.detail.value
-    console.log(this)
   },
 
   checkoutBindInput: function (e) {
     this.data.checkoutCode = e.detail.value
-    console.log(this)
   },
 
   takeAddressBindInput: function (e) {
     this.data.takeGoodsAddress = e.detail.value
-    console.log(this)
   },
 
   takeTelBindInput: function (e) {
     this.data.takeGoodsTel = e.detail.value
-    console.log(this)
   },
 
   takeNumBindInput: function (e) {
     this.data.takeGoodsNum = e.detail.value
-    console.log(this)
   },
 
   expressNoBindInput: function (e) {
     this.data.expressOrderSn = e.detail.value
-    console.log(this)
   },
-  
+
 
   clickProvince: function (e) {
     this.getProvince()
@@ -233,7 +219,6 @@ Page({
   },
 
   clickExpress: function (e) {
-    console.log('express')
     this.getExpress()
   },
 
@@ -284,21 +269,20 @@ Page({
   },
   streetBindChange: function (e) {
     this.data.streetIndex = e.detail.value
-    console.log('steet --- ' + this.data.streetIndex)
     this.setData({
       streetIndex: this.data.streetIndex
     })
   },
 
   needCheckedChange: function (e) {
-    this.data.needCheckout = !this.needCheckout
+    this.data.needCheckout = !this.data.needCheckout
     this.setData({
       needCheckout: this.data.needCheckout
     })
   },
 
   needExpressChange: function (e) {
-    this.data.needExpress = !this.needExpress
+    this.data.needExpress = !this.data.needExpress
     this.setData({
       needExpress: this.data.needExpress
     })
@@ -308,7 +292,6 @@ Page({
   * 物流公司选择
   */
   expressBindChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.data.expressIndex = e.detail.value
     this.setData({
       expressIndex: e.detail.value
@@ -319,7 +302,6 @@ Page({
    * 物流公司选择
    */
   expressReactBindChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.data.expressReactIndex = e.detail.value
     this.setData({
       expressReactIndex: e.detail.value
@@ -327,14 +309,7 @@ Page({
   },
 
   submit: function (e) {
-    let s = false
-    if(s){
-      console.log('if')
-    }else{
-      console.log('else')
-    }
     let _data = this.data
-    console.log(_data)
     let util = require('../../common/util')
     if (util.isEmpty(_data.customName)) {
       util.showToast('请输入客户姓名')
@@ -344,8 +319,9 @@ Page({
       util.showToast('请输入客户电话')
       return
     }
-    if (_data.provinceIndex < 0 || _data.cityIndex < 0 || _data.districtIndex || _data.streetIndex || util.isEmpty(_data.customAddress)) {
-      util.showToast('请输入客户地址')
+
+    if (_data.provinceIndex < 0 || _data.cityIndex < 0 || _data.districtIndex < 0 || _data.streetIndex < 0 || util.isEmpty(_data.customAddress)) {
+      util.showToast('请输入客户地址信息')
       return
     }
 
@@ -381,10 +357,11 @@ Page({
     this.createOrder()
   },
 
- 
+
 
   createOrder: function () {
     let request = require('../../common/request')
+    let util = require('../../common/util')
     let url = 'https://pgykeji.com/api/user/order/create'
 
     // let dataJson = {
@@ -433,30 +410,18 @@ Page({
 
     let dataJson = getApp().orderObject
     let dataStr = JSON.stringify(dataJson)
-    console.log(dataStr)
 
-    let that = this;
-    let data = {
+    let params = {
       'data': dataStr
     }
-    request.request(url, data, function (res) {
-      console.log(res)
-      let data = res.data.data
-      for (let i = 0; i < data.length; i++) {
-        console.log(data[i])
-        that.data.oriCategorysData.push(data[i])
-        that.data.categorysData.push(data[i].name)
-      }
 
-      console.log(that.data.categorysData)
-
-      that.setData({
-        categorysData: that.data.categorysData
-      })
+    let actions = require('../../common/networks')
+    let that = this
+    actions.createOrder(params, function (data) {
+      util.showToast('订单提交成功')
+    }, function (res) {
+      util.showToast(res.msg)
     })
-
-
-    console.log(getApp().orderObject)
   },
 
   getAddress: function (code, success, fail) {
@@ -483,7 +448,6 @@ Page({
   getProvince: function () {
     let that = this
     this.getAddress('', (data) => {
-      console.log(data)
       that.data.provinces = data || []
       that.data.provinceIndex = 0
 
@@ -497,7 +461,6 @@ Page({
   getCity: function (parentCode) {
     let that = this
     this.getAddress(parentCode, (data) => {
-      console.log(data)
       that.data.citys = data || []
       that.data.cityIndex = 0
       that.setData({
@@ -511,7 +474,6 @@ Page({
   getDistrict: function (parentCode) {
     let that = this
     this.getAddress(parentCode, (data) => {
-      console.log(data)
       that.data.districts = data || []
       that.data.districtIndex = 0
       that.setData({
@@ -525,7 +487,6 @@ Page({
   getStreet: function (parentCode) {
     let that = this
     this.getAddress(parentCode, (data) => {
-      console.log(data)
       that.data.streets = data || []
       that.data.streetIndex = 0
       that.setData({

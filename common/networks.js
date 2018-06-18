@@ -24,6 +24,11 @@ const actions = {
     let request = require('request')
     let url = URL + '/api/dict/expr/com/list'
     request.request(url, data, success, fail)
+  },
+  createOrder: function (data, success, fail){
+    let request = require('request')
+    let url = URL + '/api/user/order/create'
+    request.request(url, data, success, fail)
   }
 }
 

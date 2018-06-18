@@ -1,10 +1,7 @@
 {
   "pages": [
-      "pages/personal/personal",
+    "pages/personal/personal",
     "pages/custom_info/custom_info",
-  
-    
-    
 
     "pages/desktop/desktop",
     "pages/time/time",
@@ -20,7 +17,7 @@
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "蒲公英家居"
+    "navigationBarTitleText": "蒲公英家居智能宅配"
   },
   "tabBar": {
     "list": [
