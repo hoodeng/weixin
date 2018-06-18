@@ -14,7 +14,7 @@
 
 <!--联系人信息  -->
 <view>
-  <view class='global-title'>下单人：</view>
+  <view class='global-title'>下单人</view>
   <view class='contact-wrapper'>
     <view class='contact-item '>
       <view class='contact-item-label'>真实姓名:</view>
@@ -23,7 +23,7 @@
     <view class='global-divider'></view>
     <view class='contact-item '>
       <view class='contact-item-label'>联系电话:</view>
-      <input class='contact-item-input' placeholder='请输入联系电话' bindinput='userTelBindInput'></input>
+      <input class='contact-item-input' placeholder='请输入联系电话' bindinput='userTelBindInput' type='number'></input>
     </view>
   </view>
 </view>
@@ -31,7 +31,7 @@
 
 <!--服务类目  -->
 <view>
-  <view class='global-title'>服务:</view>
+  <view class='global-title'>服务</view>
   <view class='service-content'>
     <view class='' style='color:#333;'>服务类目:</view>
     <view class='global-picker-wrapper'>
@@ -58,7 +58,7 @@
 
 <!--商品信息  -->
 <view class=''>
-  <view class='global-title'>货品:</view>
+  <view class='global-title'>货品</view>
 
 
   <view wx:for="{{goodsArray}}" wx:for-index="idx" wx:for-item="item">
