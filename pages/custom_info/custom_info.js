@@ -23,6 +23,11 @@ Page({
     stairs:['有电梯','无电梯'],
     floor:'',
 
+    //期望收货时间
+    deliveryDates:['06-19','06-20','06-21'],
+    deliveryDateIndex:0,
+
+
 
     needJDCheckout: false,//是否需要喵师傅核销
     needAliCheckout: false,//是否需要汪师傅核销
@@ -37,10 +42,15 @@ Page({
     takeGoodsNum: 1,
     needExpress: false,//是否需要到物流点提货
 
+    //预计物流到货时间
+    expressArrivedDates:['06-18','06-19','06-20'],
+    expressArrivedDateIndex:0,
+
+
     express: [],
     expressIndex: -1,
     expressReact: ["未到货", "已到货"],
-    expressReactIndex: 0,
+    expressReactIndex: 1,
     expressOrderSn: '',//物流单号
   },
 
@@ -83,10 +93,12 @@ Page({
       order.exprStatus = _data.expressReactIndex
       order.exprOrderNo = _data.expressOrderSn
     } else {
-      // order.exprComId = ''
-      // order.exprStatus = ''
-      // order.exprOrderNo = ''
+      order.exprComId = '0'
+      order.exprStatus = '0'
+      order.exprOrderNo = '0'
     }
+    order.cstExpectDeliverDate = _data.deliveryDates[_data.deliveryDateIndex]
+    order.estDeliverDate = _data.expressArrivedDates[_data.expressArrivedDateIndex]
     console.log(order)
   },
 
@@ -94,9 +106,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let s= ''
-    let s1= 'ss'
-    console.log(s.length + '  ' + s1.length)
+    let util = require('../../common/util')
+    let _days = util.getNextSevenDays()
+    this.data.deliveryDates = _days
+    this.data.expressArrivedDates = _days
+    this.setData({
+      deliveryDates:this.data.deliveryDates,
+      expressArrivedDates:this.data.expressArrivedDates
+    })
   },
 
   /**
@@ -319,6 +336,20 @@ Page({
     })
   },
 
+  deliveryDateBindChange: function (e) {
+    this.data.deliveryDateIndex = e.detail.value
+    this.setData({
+      deliveryDateIndex: this.data.deliveryDateIndex 
+    })
+  },
+
+  expressArrivedDateBindChange: function (e) {
+    this.data.expressArrivedDateIndex = e.detail.value
+    this.setData({
+      expressArrivedDateIndex: this.data.expressArrivedDateIndex
+    })
+  },
+
   needCheckedChange: function (e) {
     this.data.needJDCheckout = !this.data.needJDCheckout
     if (this.data.needJDCheckout) {
@@ -433,14 +464,12 @@ Page({
     }
 
     this.cacheData()
-
     this.createOrder()
   },
 
 
 
   createOrder: function () {
-    console.log('create order')
     let request = require('../../common/request')
     let util = require('../../common/util')
     let dataJson = getApp().orderObject
@@ -453,7 +482,13 @@ Page({
     let actions = require('../../common/networks')
     let that = this
     actions.createOrder(params, function (data) {
-      util.showToast('订单提交成功')
+      wx.showModal({
+        title: '温馨提示',
+        content: '您提交的订单已经成功，请耐心等候师傅上门服务',
+        showCancel:false,
+        success: function (res) {
+        }
+      })
     }, function (res) {
       util.showToast(res.msg)
     })
