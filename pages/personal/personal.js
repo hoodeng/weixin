@@ -22,22 +22,22 @@ Page({
 
     //商品数组
     goodsArray: [
-      {
-        categorys: [
-        ],
-        catIndex: -1,
-        subCategorys: [],
-        subCatIndex: -1,
-        hasSubCat: false,//是否有子商品分类，不一定有
+      // {
+      //   categorys: [
+      //   ],
+      //   catIndex: -1,
+      //   subCategorys: [],
+      //   subCatIndex: -1,
+      //   hasSubCat: false,//是否有子商品分类，不一定有
 
-        goodsNumber: 1,
-        goodsModel: '',
-        goodsWarning: '',
-        vLength: 0,
-        vWidth: 0,
-        vHeight: 0,
-        weight: 0
-      }
+      //   goodsNumber: 1,
+      //   goodsModel: '',
+      //   goodsWarning: '',
+      //   vLength: 0,
+      //   vWidth: 0,
+      //   vHeight: 0,
+      //   weight: 0
+      // }
     ]
   },
 
@@ -126,6 +126,8 @@ Page({
     this.data.subCategorys = []
     this.data.subCatIndex = -1
     this.data.hasSubCat = false
+    this.data.goodsArray = []
+    
     this.setData({
       serviceIndex: this.data.serviceIndex,
       servicesType: this.data.servicesType,
@@ -134,7 +136,8 @@ Page({
       catIndex: this.data.catIndex,
       subCategorys: this.data.subCategorys,
       subCatIndex: this.data.subCatIndex,
-      hasSubCat: this.data.hasSubCat
+      hasSubCat: this.data.hasSubCat,
+      goodsArray: this.data.goodsArray
     })
     let parentId = this.data.services[index].id
     this.getServiceTypes(parentId)
@@ -167,8 +170,6 @@ Page({
     //   subCatIndex: this.data.subCatIndex
     // })
 
-
-    console.log(e)
     let index = e.currentTarget.dataset.index
     let goods = this.data.goodsArray[index]
 
@@ -536,8 +537,6 @@ Page({
       goods.weight = item.weight
       order.items.push(goods)
     }) 
-
-    console.log(order)
   },
 
   getServices: function () {
